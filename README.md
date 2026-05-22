@@ -1,36 +1,69 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# MConverter.eu Blog
 
-## Getting Started
+Personal blog foundation built with Next.js App Router, PayloadCMS, and MongoDB.
 
-First, run the development server:
+## Local Setup
+
+Create a local environment file:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+cp .env.example .env
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+For local development from the host machine, keep:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```dotenv
+DATABASE_URI=mongodb://127.0.0.1:27017/blog
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Start MongoDB and the app:
 
-## Learn More
+```bash
+docker compose up -d mongo
+pnpm install
+pnpm dev
+```
 
-To learn more about Next.js, take a look at the following resources:
+Open:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Public site: http://localhost:3000
+- Blog index: http://localhost:3000/blog
+- Payload admin: http://localhost:3000/admin
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+The first admin user is created through Payload's initial auth flow at
+`/admin`.
 
-## Deploy on Vercel
+## Environment Variables
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- `DATABASE_URI`: MongoDB connection string. Use
+  `mongodb://127.0.0.1:27017/blog` when running Next.js on the host, or
+  `mongodb://mongo:27017/blog` when running Next.js inside Docker Compose.
+- `PAYLOAD_SECRET`: long random Payload secret. Never commit a real value.
+- `NEXT_PUBLIC_SITE_URL`: public base URL used by metadata, robots, and
+  sitemap. Use the Vercel URL until a custom domain exists.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+For production, point `DATABASE_URI` to MongoDB Atlas Free Tier.
+
+## Verification
+
+Run:
+
+```bash
+pnpm generate:importmap
+pnpm generate:types
+pnpm lint
+pnpm build
+```
+
+Manual CMS path:
+
+1. Start MongoDB and `pnpm dev`.
+2. Open `/admin` and create the first admin user.
+3. Create a tag and a post with `status=published`.
+4. Verify the post appears at `/blog` and renders at `/blog/<slug>`.
+5. Change the post to `draft` and verify it disappears from public pages.
+
+## Deployment
+
+The target stack is Vercel Hobby plus MongoDB Atlas Free Tier. Configure the
+same environment variables in Vercel before deploying.
