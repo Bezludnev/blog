@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 
+import { MediaImage } from "@/components/media-image";
 import { RichText } from "@/components/rich-text";
 import { SiteHeader } from "@/components/site-header";
+import { getMediaUrl } from "@/lib/media";
 import { getPublishedPostBySlug } from "@/lib/posts";
 
 type Args = {
@@ -23,10 +25,16 @@ function formatDate(value?: null | string) {
 export async function generateMetadata({ params }: Args): Promise<Metadata> {
   const { slug } = await params;
   const post = await getPublishedPostBySlug(slug);
+  const coverUrl = getMediaUrl(post.coverImage);
 
   return {
     title: post.seoTitle || post.title,
     description: post.seoDescription || post.excerpt,
+    openGraph: {
+      title: post.seoTitle || post.title,
+      description: post.seoDescription || post.excerpt,
+      images: coverUrl ? [{ url: coverUrl }] : undefined,
+    },
   };
 }
 
@@ -46,6 +54,12 @@ export default async function BlogPostPage({ params }: Args) {
           <p className="mt-5 text-lg leading-8 text-zinc-600">
             {post.excerpt}
           </p>
+          <MediaImage
+            className="relative mt-8 aspect-[16/9] overflow-hidden bg-zinc-100"
+            media={post.coverImage}
+            priority
+            sizes="(min-width: 768px) 768px, 100vw"
+          />
           <RichText content={post.content} />
         </article>
       </main>

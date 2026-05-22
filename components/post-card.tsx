@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import { MediaImage } from "./media-image";
 import type { Post, Tag } from "../payload-types";
 
 function formatDate(value?: null | string) {
@@ -21,6 +22,11 @@ export function PostCard({ post }: { post: Post }) {
 
   return (
     <article className="border-b border-zinc-200 py-8">
+      <MediaImage
+        className="relative mb-5 aspect-[16/9] overflow-hidden bg-zinc-100"
+        media={post.coverImage}
+        sizes="(min-width: 768px) 720px, 100vw"
+      />
       <p className="text-sm text-zinc-500">{formatDate(post.publishedAt)}</p>
       <h2 className="mt-2 text-2xl font-semibold text-zinc-950">
         <Link className="hover:text-zinc-700" href={`/blog/${post.slug}`}>

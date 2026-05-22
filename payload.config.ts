@@ -1,5 +1,6 @@
 import { mongooseAdapter } from "@payloadcms/db-mongodb";
 import { lexicalEditor } from "@payloadcms/richtext-lexical";
+import { vercelBlobStorage } from "@payloadcms/storage-vercel-blob";
 import path from "path";
 import { buildConfig } from "payload";
 import { fileURLToPath } from "url";
@@ -15,6 +16,8 @@ const dirname = path.dirname(filename);
 
 const databaseUri = process.env.DATABASE_URI;
 const payloadSecret = process.env.PAYLOAD_SECRET;
+const blobReadWriteToken = process.env.BLOB_READ_WRITE_TOKEN;
+const isVercel = Boolean(process.env.VERCEL || process.env.VERCEL_ENV);
 
 if (!databaseUri) {
   throw new Error("DATABASE_URI is required");
@@ -22,6 +25,10 @@ if (!databaseUri) {
 
 if (!payloadSecret) {
   throw new Error("PAYLOAD_SECRET is required");
+}
+
+if (isVercel && !blobReadWriteToken) {
+  throw new Error("BLOB_READ_WRITE_TOKEN is required for media uploads on Vercel");
 }
 
 export default buildConfig({
@@ -38,6 +45,18 @@ export default buildConfig({
   }),
   editor: lexicalEditor(),
   globals: [SiteSettings],
+  plugins: [
+    vercelBlobStorage({
+      enabled: Boolean(blobReadWriteToken),
+      clientUploads: true,
+      collections: {
+        media: {
+          prefix: "media",
+        },
+      },
+      token: blobReadWriteToken,
+    }),
+  ],
   secret: payloadSecret,
   typescript: {
     outputFile: path.resolve(dirname, "payload-types.ts"),
