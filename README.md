@@ -92,6 +92,14 @@ Project CMS path:
 3. Open `/projects/<slug>`.
 4. Change it to `draft` and verify the public pages hide it.
 
+Comment moderation path:
+
+1. Open a published post at `/blog/<slug>`.
+2. Submit a comment with name and body.
+3. Confirm the comment appears in `/admin` with `status=pending`.
+4. Confirm the pending comment is not visible publicly.
+5. Change the comment to `approved` and verify it appears under the post.
+
 Manual media path with Blob credentials:
 
 1. Upload a JPEG, PNG, WebP, or GIF in Payload Media.

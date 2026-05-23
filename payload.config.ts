@@ -8,6 +8,7 @@ import { fileURLToPath } from "url";
 import { Media } from "./collections/Media.ts";
 import { Posts } from "./collections/Posts.ts";
 import { Projects } from "./collections/Projects.ts";
+import { Comments } from "./collections/Comments.ts";
 import { Tags } from "./collections/Tags.ts";
 import { Users } from "./collections/Users.ts";
 import { SiteSettings } from "./globals/SiteSettings.ts";
@@ -40,7 +41,7 @@ export default buildConfig({
       importMapFile: path.resolve(dirname, "app/(payload)/admin/importMap.js"),
     },
   },
-  collections: [Users, Media, Tags, Posts, Projects],
+  collections: [Users, Media, Tags, Posts, Projects, Comments],
   db: mongooseAdapter({
     url: databaseUri,
   }),

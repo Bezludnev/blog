@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 
+import { CommentsSection } from "@/components/comments-section";
 import { MediaImage } from "@/components/media-image";
 import { RichText } from "@/components/rich-text";
 import { SiteHeader } from "@/components/site-header";
@@ -61,6 +62,7 @@ export default async function BlogPostPage({ params }: Args) {
             sizes="(min-width: 768px) 768px, 100vw"
           />
           <RichText content={post.content} />
+          <CommentsSection postId={post.id} postSlug={post.slug} />
         </article>
       </main>
     </div>
