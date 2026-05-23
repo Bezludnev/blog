@@ -1,0 +1,32 @@
+services:
+  payload:
+    image: node:24-alpine
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/home/node/app
+      - node_modules:/home/node/app/node_modules
+    working_dir: /home/node/app/
+    command: sh -c "corepack enable && corepack prepare pnpm@latest --activate && pnpm install --frozen-lockfile && pnpm dev"
+    depends_on:
+      - mongo
+    env_file:
+      - .env
+
+  # Use mongodb://mongo:27017/blog when Next.js runs inside this compose service.
+  # Use mongodb://127.0.0.1:27017/blog when Next.js runs on the host machine.
+  mongo:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    command:
+      - --storageEngine=wiredTiger
+    volumes:
+      - data:/data/db
+    logging:
+      driver: none
+
+
+volumes:
+  data:
+  node_modules:
