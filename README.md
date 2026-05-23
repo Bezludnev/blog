@@ -58,7 +58,7 @@ To verify the production media path locally, add a Vercel Blob store and set:
 
 ```dotenv
 BLOB_READ_WRITE_TOKEN=vercel_blob_rw_<store-id>_<random-string>
-NEXT_PUBLIC_BLOB_HOSTNAME=yh6za6fikxgaixuh.public.blob.vercel-storage.com
+NEXT_PUBLIC_BLOB_HOSTNAME=<store-id>.public.blob.vercel-storage.com
 ```
 
 On Vercel, add Blob storage to the project, set both variables in the project
