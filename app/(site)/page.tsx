@@ -32,6 +32,18 @@ export default function Home() {
           </Link>
           <Link
             className="rounded border border-zinc-300 px-4 py-2 text-sm font-medium text-zinc-700 hover:border-zinc-500 hover:text-zinc-950"
+            href="/about"
+          >
+            About
+          </Link>
+          <Link
+            className="rounded border border-zinc-300 px-4 py-2 text-sm font-medium text-zinc-700 hover:border-zinc-500 hover:text-zinc-950"
+            href="/contact"
+          >
+            Contact
+          </Link>
+          <Link
+            className="rounded border border-zinc-300 px-4 py-2 text-sm font-medium text-zinc-700 hover:border-zinc-500 hover:text-zinc-950"
             href="/admin"
           >
             Open admin
