@@ -8,6 +8,9 @@ export function SiteHeader() {
           MConverter.eu
         </Link>
         <div className="flex items-center gap-4 text-sm text-zinc-600">
+          <Link className="hover:text-zinc-950" href="/projects">
+            Projects
+          </Link>
           <Link className="hover:text-zinc-950" href="/blog">
             Blog
           </Link>

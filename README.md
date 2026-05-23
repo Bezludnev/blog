@@ -42,7 +42,7 @@ The first admin user is created through Payload's initial auth flow at
 - `NEXT_PUBLIC_SITE_URL`: public base URL used by metadata, robots, and
   sitemap. Use the Vercel URL until a custom domain exists.
 - `BLOB_READ_WRITE_TOKEN`: Vercel Blob read/write token for media uploads.
-  Keep this token out of git.
+  It must start with `vercel_blob_rw_`. Keep this token out of git.
 - `NEXT_PUBLIC_BLOB_HOSTNAME`: exact public Blob hostname for `next/image`,
   for example `<store-id>.public.blob.vercel-storage.com`.
 
@@ -57,8 +57,8 @@ development.
 To verify the production media path locally, add a Vercel Blob store and set:
 
 ```dotenv
-BLOB_READ_WRITE_TOKEN=...
-NEXT_PUBLIC_BLOB_HOSTNAME=<store-id>.public.blob.vercel-storage.com
+BLOB_READ_WRITE_TOKEN=vercel_blob_rw_<store-id>_<random-string>
+NEXT_PUBLIC_BLOB_HOSTNAME=yh6za6fikxgaixuh.public.blob.vercel-storage.com
 ```
 
 On Vercel, add Blob storage to the project, set both variables in the project
@@ -84,6 +84,13 @@ Manual CMS path:
 3. Create a tag and a post with `status=published`.
 4. Verify the post appears at `/blog` and renders at `/blog/<slug>`.
 5. Change the post to `draft` and verify it disappears from public pages.
+
+Project CMS path:
+
+1. Create a project in `/admin` with `status=published`.
+2. Verify it appears at `/projects`.
+3. Open `/projects/<slug>`.
+4. Change it to `draft` and verify the public pages hide it.
 
 Manual media path with Blob credentials:
 
