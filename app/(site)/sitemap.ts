@@ -17,7 +17,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: now,
     },
     {
+      url: absoluteUrl("/about"),
+      lastModified: now,
+    },
+    {
       url: absoluteUrl("/blog"),
+      lastModified: now,
+    },
+    {
+      url: absoluteUrl("/contact"),
       lastModified: now,
     },
     {

@@ -92,6 +92,14 @@ Project CMS path:
 3. Open `/projects/<slug>`.
 4. Change it to `draft` and verify the public pages hide it.
 
+About and contact CMS path:
+
+1. Open `/admin` and update Site Settings with headline, bio, contact email,
+   and social links.
+2. Open `/about` and verify the headline, bio, and social links render.
+3. Open `/contact` and verify the `mailto:` link and social links render.
+4. Open `/sitemap.xml` and verify `/about` and `/contact` are present.
+
 Comment moderation path:
 
 1. Open a published post at `/blog/<slug>`.
