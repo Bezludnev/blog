@@ -289,6 +289,7 @@ export interface Project {
 export interface Comment {
   id: string;
   post: string | Post;
+  parentComment?: (string | null) | Comment;
   authorName: string;
   body: string;
   status: 'pending' | 'approved' | 'rejected' | 'deleted';
@@ -517,6 +518,7 @@ export interface ProjectsSelect<T extends boolean = true> {
  */
 export interface CommentsSelect<T extends boolean = true> {
   post?: T;
+  parentComment?: T;
   authorName?: T;
   body?: T;
   status?: T;

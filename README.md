@@ -160,10 +160,19 @@ Comment moderation path:
 3. Confirm the comment appears in `/admin` with `status=pending`.
 4. Confirm the pending comment is not visible publicly.
 5. Change the comment to `approved` and verify it appears under the post.
-6. Temporarily set `COMMENT_RATE_LIMIT_MAX=1`.
-7. Submit a second comment for the same post from the same browser and verify
+6. Submit a reply to the approved top-level comment.
+7. Confirm the reply appears in `/admin` with `status=pending` and a
+   `parentComment`.
+8. Confirm the pending reply is not visible publicly.
+9. Change the reply to `approved` and verify it renders under the parent
+   comment.
+10. Confirm replies do not show their own reply form.
+11. POST to `/api/comments` with a reply ID as `parentCommentId` and confirm
+   the API returns `400`.
+12. Temporarily set `COMMENT_RATE_LIMIT_MAX=1`.
+13. Submit a second comment for the same post from the same browser and verify
    the API returns `429`.
-8. Confirm only the first accepted comment appears in `/admin`.
+14. Confirm only the first accepted comment appears in `/admin`.
 
 Manual media path with Blob credentials:
 

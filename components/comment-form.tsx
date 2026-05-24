@@ -1,9 +1,12 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useId, useRef, useState } from "react";
 
 type CommentFormProps = {
+  parentCommentId?: string;
   postSlug: string;
+  submitLabel?: string;
+  successMessage?: string;
 };
 
 type FormState =
@@ -13,7 +16,13 @@ type FormState =
     }
   | undefined;
 
-export function CommentForm({ postSlug }: CommentFormProps) {
+export function CommentForm({
+  parentCommentId,
+  postSlug,
+  submitLabel = "Submit comment",
+  successMessage = "Comment submitted for moderation.",
+}: CommentFormProps) {
+  const formId = useId();
   const formRef = useRef<HTMLFormElement>(null);
   const [formState, setFormState] = useState<FormState>();
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -29,6 +38,7 @@ export function CommentForm({ postSlug }: CommentFormProps) {
       body: JSON.stringify({
         authorName: formData.get("authorName"),
         body: formData.get("body"),
+        parentCommentId,
         postSlug,
         website: formData.get("website"),
       }),
@@ -54,23 +64,27 @@ export function CommentForm({ postSlug }: CommentFormProps) {
 
     formRef.current?.reset();
     setFormState({
-      message: result?.message || "Comment submitted for moderation.",
+      message: result?.message || successMessage,
       type: "success",
     });
   }
+
+  const authorNameId = `${formId}-comment-author-name`;
+  const bodyId = `${formId}-comment-body`;
+  const websiteId = `${formId}-comment-website`;
 
   return (
     <form className="mt-8 space-y-4" onSubmit={handleSubmit} ref={formRef}>
       <div>
         <label
           className="block text-sm font-medium text-zinc-800"
-          htmlFor="comment-author-name"
+          htmlFor={authorNameId}
         >
           Name
         </label>
         <input
           className="mt-2 w-full border border-zinc-300 bg-white px-3 py-2 text-zinc-950 outline-none focus:border-zinc-950"
-          id="comment-author-name"
+          id={authorNameId}
           maxLength={80}
           name="authorName"
           required
@@ -81,13 +95,13 @@ export function CommentForm({ postSlug }: CommentFormProps) {
       <div>
         <label
           className="block text-sm font-medium text-zinc-800"
-          htmlFor="comment-body"
+          htmlFor={bodyId}
         >
           Comment
         </label>
         <textarea
           className="mt-2 min-h-32 w-full border border-zinc-300 bg-white px-3 py-2 text-zinc-950 outline-none focus:border-zinc-950"
-          id="comment-body"
+          id={bodyId}
           maxLength={2000}
           name="body"
           required
@@ -95,10 +109,10 @@ export function CommentForm({ postSlug }: CommentFormProps) {
       </div>
 
       <div className="hidden" aria-hidden="true">
-        <label htmlFor="comment-website">Website</label>
+        <label htmlFor={websiteId}>Website</label>
         <input
           autoComplete="off"
-          id="comment-website"
+          id={websiteId}
           name="website"
           tabIndex={-1}
           type="text"
@@ -120,8 +134,37 @@ export function CommentForm({ postSlug }: CommentFormProps) {
         disabled={isSubmitting}
         type="submit"
       >
-        {isSubmitting ? "Submitting..." : "Submit comment"}
+        {isSubmitting ? "Submitting..." : submitLabel}
       </button>
     </form>
+  );
+}
+
+type ReplyFormProps = {
+  parentCommentId: string;
+  postSlug: string;
+};
+
+export function ReplyForm({ parentCommentId, postSlug }: ReplyFormProps) {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <div className="mt-4">
+      <button
+        className="text-sm font-medium text-zinc-700 underline-offset-4 hover:underline"
+        onClick={() => setIsOpen((value) => !value)}
+        type="button"
+      >
+        {isOpen ? "Cancel reply" : "Reply"}
+      </button>
+      {isOpen ? (
+        <CommentForm
+          parentCommentId={parentCommentId}
+          postSlug={postSlug}
+          submitLabel="Submit reply"
+          successMessage="Reply submitted for moderation."
+        />
+      ) : null}
+    </div>
   );
 }
