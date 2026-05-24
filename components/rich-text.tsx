@@ -35,7 +35,14 @@ function renderText(node: LexicalTextNode, key: string) {
   let content: ReactNode = node.text || "";
 
   if (hasFormat(node.format, 16, "code")) {
-    content = <code key={`${key}-code`}>{content}</code>;
+    content = (
+      <code
+        className="rounded bg-zinc-100 px-1 py-0.5 text-sm text-zinc-900 dark:bg-zinc-800 dark:text-zinc-100"
+        key={`${key}-code`}
+      >
+        {content}
+      </code>
+    );
   }
   if (hasFormat(node.format, 1, "bold")) {
     content = <strong key={`${key}-bold`}>{content}</strong>;
@@ -65,14 +72,14 @@ function renderNode(node: LexicalNode, key: string): ReactNode {
     case "heading": {
       if (node.tag === "h2") {
         return (
-          <h2 className="mt-10 text-2xl font-semibold text-zinc-950" key={key}>
+          <h2 className="mt-10 text-2xl font-semibold text-zinc-950 dark:text-zinc-100" key={key}>
             {children}
           </h2>
         );
       }
 
       return (
-        <h3 className="mt-8 text-xl font-semibold text-zinc-950" key={key}>
+        <h3 className="mt-8 text-xl font-semibold text-zinc-950 dark:text-zinc-100" key={key}>
           {children}
         </h3>
       );
@@ -96,7 +103,7 @@ function renderNode(node: LexicalNode, key: string): ReactNode {
     case "quote":
       return (
         <blockquote
-          className="my-6 border-l-2 border-zinc-300 pl-4 text-zinc-700"
+          className="my-6 border-l-2 border-zinc-300 pl-4 text-zinc-700 dark:border-zinc-700 dark:text-zinc-300"
           key={key}
         >
           {children}
@@ -104,7 +111,7 @@ function renderNode(node: LexicalNode, key: string): ReactNode {
       );
     case "paragraph":
       return (
-        <p className="my-5 leading-8 text-zinc-700" key={key}>
+        <p className="my-5 leading-8 text-zinc-700 dark:text-zinc-300" key={key}>
           {children}
         </p>
       );

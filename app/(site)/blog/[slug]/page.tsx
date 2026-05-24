@@ -3,6 +3,7 @@ import Link from "next/link";
 
 import { CommentsSection } from "@/components/comments-section";
 import { MediaImage } from "@/components/media-image";
+import { PostViewTracker } from "@/components/post-view-tracker";
 import { RichText } from "@/components/rich-text";
 import { SiteHeader } from "@/components/site-header";
 import { getMediaUrl } from "@/lib/media";
@@ -53,22 +54,23 @@ export default async function BlogPostPage({ params }: Args) {
   const tags = getTags(post);
 
   return (
-    <div className="min-h-screen bg-zinc-50">
+    <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950">
       <SiteHeader />
+      <PostViewTracker postSlug={post.slug} />
       <main className="mx-auto max-w-3xl px-6 py-16">
-        <article className="bg-white px-6 py-10">
-          <p className="text-sm text-zinc-500">{formatDate(post.publishedAt)}</p>
-          <h1 className="mt-3 text-4xl font-semibold text-zinc-950">
+        <article className="bg-white px-6 py-10 dark:bg-zinc-900">
+          <p className="text-sm text-zinc-500 dark:text-zinc-400">{formatDate(post.publishedAt)}</p>
+          <h1 className="mt-3 text-4xl font-semibold text-zinc-950 dark:text-zinc-100">
             {post.title}
           </h1>
-          <p className="mt-5 text-lg leading-8 text-zinc-600">
+          <p className="mt-5 text-lg leading-8 text-zinc-600 dark:text-zinc-400">
             {post.excerpt}
           </p>
           {tags.length > 0 ? (
             <div className="mt-5 flex flex-wrap gap-2">
               {tags.map((tag) => (
                 <Link
-                  className="rounded border border-zinc-200 px-2 py-1 text-xs text-zinc-600"
+                  className="rounded border border-zinc-200 px-2 py-1 text-xs text-zinc-600 dark:border-zinc-700 dark:text-zinc-300"
                   href={`/tags/${tag.slug}`}
                   key={tag.id}
                 >
@@ -78,7 +80,7 @@ export default async function BlogPostPage({ params }: Args) {
             </div>
           ) : null}
           <MediaImage
-            className="relative mt-8 aspect-[16/9] overflow-hidden bg-zinc-100"
+            className="relative mt-8 aspect-[16/9] overflow-hidden bg-zinc-100 dark:bg-zinc-800"
             media={post.coverImage}
             priority
             sizes="(min-width: 768px) 768px, 100vw"

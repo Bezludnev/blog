@@ -31,7 +31,7 @@ export function SocialLinks({ links }: Props) {
     <div className="mt-5 flex flex-wrap gap-3 text-sm font-medium">
       {validLinks.map((link) => (
         <a
-          className="rounded border border-zinc-300 px-3 py-2 text-zinc-700 hover:border-zinc-500 hover:text-zinc-950"
+          className="rounded border border-zinc-300 px-3 py-2 text-zinc-700 hover:border-zinc-500 hover:text-zinc-950 dark:border-zinc-700 dark:text-zinc-300 dark:hover:border-zinc-100 dark:hover:text-zinc-100"
           href={link.url}
           key={`${link.label}-${link.url}`}
           rel="noreferrer"
