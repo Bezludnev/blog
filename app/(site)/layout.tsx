@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import { VercelInsights } from "@/components/vercel-insights";
 import { getThemeBootstrapScript } from "@/lib/theme";
 import "../globals.css";
@@ -15,10 +16,12 @@ export default function SiteLayout({
 }>) {
   return (
     <html lang="en" className="h-full antialiased" suppressHydrationWarning>
-      <head>
-        <script dangerouslySetInnerHTML={{ __html: getThemeBootstrapScript() }} />
-      </head>
       <body className="min-h-full flex flex-col">
+        <Script
+          dangerouslySetInnerHTML={{ __html: getThemeBootstrapScript() }}
+          id="theme-bootstrap"
+          strategy="beforeInteractive"
+        />
         {children}
         <VercelInsights />
       </body>

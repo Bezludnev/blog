@@ -1,16 +1,39 @@
 import { expect, test } from "@playwright/test";
 
+test("theme toggle hydrates with a saved dark preference", async ({ page }) => {
+  const hydrationMessages: string[] = [];
+
+  page.on("console", (message) => {
+    if (message.text().includes("Hydration failed")) {
+      hydrationMessages.push(message.text());
+    }
+  });
+  page.on("pageerror", (error) => {
+    if (error.message.includes("Hydration failed")) {
+      hydrationMessages.push(error.message);
+    }
+  });
+
+  await page.addInitScript(() => {
+    window.localStorage.setItem("blog-theme", "dark");
+  });
+  await page.goto("/");
+
+  await expect(page.getByRole("switch")).toHaveAttribute(
+    "aria-checked",
+    "true",
+  );
+  expect(hydrationMessages).toEqual([]);
+});
+
 test("public CMS pages render and navigate from the shared header", async ({
   page,
 }) => {
   await page.goto("/");
   const navigation = page.getByRole("navigation");
 
-  await expect(
-    page.getByRole("heading", {
-      name: /Notes on software delivery, systems, and product engineering/i,
-    }),
-  ).toBeVisible();
+  await expect(navigation).toBeVisible();
+  await expect(page.getByRole("link", { name: "Read the blog" })).toBeVisible();
 
   await navigation.getByRole("link", { name: "Blog", exact: true }).click();
   await expect(page).toHaveURL(/\/blog$/);
