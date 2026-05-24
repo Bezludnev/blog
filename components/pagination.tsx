@@ -34,7 +34,7 @@ export function Pagination({
     >
       {hasPrevPage && prevPage ? (
         <Link
-          className="border border-zinc-300 px-4 py-2 font-medium text-zinc-700 hover:border-zinc-500 hover:text-zinc-950 dark:border-zinc-700 dark:text-zinc-300 dark:hover:border-zinc-100 dark:hover:text-zinc-100"
+          className="pagination-link"
           href={buildPaginationHref({ page: prevPage, pathname, query })}
         >
           Previous
@@ -49,7 +49,7 @@ export function Pagination({
       </span>
       {hasNextPage && nextPage ? (
         <Link
-          className="border border-zinc-300 px-4 py-2 font-medium text-zinc-700 hover:border-zinc-500 hover:text-zinc-950 dark:border-zinc-700 dark:text-zinc-300 dark:hover:border-zinc-100 dark:hover:text-zinc-100"
+          className="pagination-link"
           href={buildPaginationHref({ page: nextPage, pathname, query })}
         >
           Next

@@ -10,22 +10,22 @@ export function SiteHeader() {
           Personal Engineering Blog
         </Link>
         <div className="flex flex-wrap items-center justify-end gap-x-4 gap-y-2 text-sm text-zinc-600 dark:text-zinc-400">
-          <Link className="hover:text-zinc-950 dark:hover:text-zinc-100" href="/about">
+          <Link className="text-link" href="/about">
             About
           </Link>
-          <Link className="hover:text-zinc-950 dark:hover:text-zinc-100" href="/projects">
+          <Link className="text-link" href="/projects">
             Projects
           </Link>
-          <Link className="hover:text-zinc-950 dark:hover:text-zinc-100" href="/feed">
+          <Link className="text-link" href="/feed">
             Feed
           </Link>
-          <Link className="hover:text-zinc-950 dark:hover:text-zinc-100" href="/blog">
+          <Link className="text-link" href="/blog">
             Blog
           </Link>
-          <Link className="hover:text-zinc-950 dark:hover:text-zinc-100" href="/contact">
+          <Link className="text-link" href="/contact">
             Contact
           </Link>
-          <Link className="hover:text-zinc-950 dark:hover:text-zinc-100" href="/admin">
+          <Link className="text-link" href="/admin">
             Admin
           </Link>
           <ThemeToggle />

@@ -72,7 +72,7 @@ function renderNode(node: LexicalNode, key: string): ReactNode {
     case "heading": {
       if (node.tag === "h2") {
         return (
-          <h2 className="mt-10 text-2xl font-semibold text-zinc-950 dark:text-zinc-100" key={key}>
+          <h2 className="card-title mt-10" key={key}>
             {children}
           </h2>
         );
@@ -103,7 +103,7 @@ function renderNode(node: LexicalNode, key: string): ReactNode {
     case "quote":
       return (
         <blockquote
-          className="my-6 border-l-2 border-zinc-300 pl-4 text-zinc-700 dark:border-zinc-700 dark:text-zinc-300"
+          className="body-copy my-6 border-l-2 border-zinc-300 pl-4 dark:border-zinc-700"
           key={key}
         >
           {children}
@@ -111,7 +111,7 @@ function renderNode(node: LexicalNode, key: string): ReactNode {
       );
     case "paragraph":
       return (
-        <p className="my-5 leading-8 text-zinc-700 dark:text-zinc-300" key={key}>
+        <p className="body-copy my-5 leading-8" key={key}>
           {children}
         </p>
       );

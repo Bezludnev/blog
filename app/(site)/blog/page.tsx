@@ -39,23 +39,23 @@ export default async function BlogPage({ searchParams }: Args) {
   }
 
   return (
-    <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950">
+    <div className="site-page">
       <SiteHeader />
-      <main className="mx-auto max-w-5xl px-6 py-16">
-        <h1 className="text-4xl font-semibold text-zinc-950 dark:text-zinc-100">Blog</h1>
-        <p className="mt-4 max-w-2xl text-zinc-600 dark:text-zinc-400">
+      <main className="site-main">
+        <h1 className="page-title">Blog</h1>
+        <p className="page-lede">
           Published notes from the CMS.
         </p>
         <form action="/blog" className="mt-8 flex max-w-2xl gap-3" method="GET">
           <input
-            className="min-w-0 flex-1 border border-zinc-300 bg-white px-3 py-2 text-zinc-950 outline-none focus:border-zinc-500 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100 dark:focus:border-zinc-100"
+            className="form-field min-w-0 flex-1 dark:bg-zinc-900"
             defaultValue={query}
             name="q"
             placeholder="Search posts"
             type="search"
           />
           <button
-            className="border border-zinc-950 bg-zinc-950 px-4 py-2 text-sm font-medium text-white hover:bg-zinc-800 dark:border-zinc-100 dark:bg-zinc-100 dark:text-zinc-950 dark:hover:bg-white"
+            className="action-link action-primary border border-zinc-950 dark:border-zinc-100"
             type="submit"
           >
             Search
@@ -67,19 +67,19 @@ export default async function BlogPage({ searchParams }: Args) {
               Search results for{" "}
               <span className="font-medium text-zinc-950 dark:text-zinc-100">{query}</span>
             </p>
-            <Link className="hover:text-zinc-950 dark:hover:text-zinc-100" href="/blog">
+            <Link className="text-link" href="/blog">
               Clear search
             </Link>
           </div>
         ) : null}
         {postsPage.docs.length > 0 ? (
-          <div className="mt-8 bg-white px-6 dark:bg-zinc-900">
+          <div className="list-panel mt-8">
             {postsPage.docs.map((post) => (
               <PostCard key={post.id} post={post} />
             ))}
           </div>
         ) : (
-          <p className="mt-10 border border-dashed border-zinc-300 bg-white p-6 text-zinc-600 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-400">
+          <p className="empty-state mt-10">
             {query ? "No posts match this search." : "No published posts yet."}
           </p>
         )}

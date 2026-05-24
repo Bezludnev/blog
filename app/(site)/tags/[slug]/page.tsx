@@ -52,26 +52,24 @@ export default async function TagPage({ params, searchParams }: Args) {
   }
 
   return (
-    <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950">
+    <div className="site-page">
       <SiteHeader />
-      <main className="mx-auto max-w-5xl px-6 py-16">
-        <p className="text-sm font-medium uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
-          Tag
-        </p>
-        <h1 className="mt-3 text-4xl font-semibold text-zinc-950 dark:text-zinc-100">
+      <main className="site-main">
+        <p className="page-eyebrow">Tag</p>
+        <h1 className="page-title mt-3">
           {tag.name}
         </h1>
         {tag.description ? (
-          <p className="mt-4 max-w-2xl text-zinc-600 dark:text-zinc-400">{tag.description}</p>
+          <p className="page-lede">{tag.description}</p>
         ) : null}
         {postsPage.docs.length > 0 ? (
-          <div className="mt-8 bg-white px-6 dark:bg-zinc-900">
+          <div className="list-panel mt-8">
             {postsPage.docs.map((post) => (
               <PostCard key={post.id} post={post} />
             ))}
           </div>
         ) : (
-          <p className="mt-10 border border-dashed border-zinc-300 bg-white p-6 text-zinc-600 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-400">
+          <p className="empty-state mt-10">
             No published posts use this tag yet.
           </p>
         )}

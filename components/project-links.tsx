@@ -9,10 +9,10 @@ export function ProjectLinks({ demoUrl, repositoryUrl }: Props) {
   }
 
   return (
-    <div className="mt-5 flex flex-wrap gap-3 text-sm font-medium">
+    <div className="action-row mt-5">
       {demoUrl ? (
         <a
-          className="rounded bg-zinc-950 px-3 py-2 text-white hover:bg-zinc-700 dark:bg-zinc-100 dark:text-zinc-950 dark:hover:bg-white"
+          className="action-link-compact action-primary"
           href={demoUrl}
           rel="noreferrer"
           target="_blank"
@@ -22,7 +22,7 @@ export function ProjectLinks({ demoUrl, repositoryUrl }: Props) {
       ) : null}
       {repositoryUrl ? (
         <a
-          className="rounded border border-zinc-300 px-3 py-2 text-zinc-700 hover:border-zinc-500 hover:text-zinc-950 dark:border-zinc-700 dark:text-zinc-300 dark:hover:border-zinc-100 dark:hover:text-zinc-100"
+          className="action-link-compact action-secondary"
           href={repositoryUrl}
           rel="noreferrer"
           target="_blank"

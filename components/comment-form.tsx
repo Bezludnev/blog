@@ -76,14 +76,11 @@ export function CommentForm({
   return (
     <form className="mt-8 space-y-4" onSubmit={handleSubmit} ref={formRef}>
       <div>
-        <label
-          className="block text-sm font-medium text-zinc-800 dark:text-zinc-200"
-          htmlFor={authorNameId}
-        >
+        <label className="form-label" htmlFor={authorNameId}>
           Name
         </label>
         <input
-          className="mt-2 w-full border border-zinc-300 bg-white px-3 py-2 text-zinc-950 outline-none focus:border-zinc-950 dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100 dark:focus:border-zinc-100"
+          className="form-field mt-2 w-full"
           id={authorNameId}
           maxLength={80}
           name="authorName"
@@ -93,14 +90,11 @@ export function CommentForm({
       </div>
 
       <div>
-        <label
-          className="block text-sm font-medium text-zinc-800 dark:text-zinc-200"
-          htmlFor={bodyId}
-        >
+        <label className="form-label" htmlFor={bodyId}>
           Comment
         </label>
         <textarea
-          className="mt-2 min-h-32 w-full border border-zinc-300 bg-white px-3 py-2 text-zinc-950 outline-none focus:border-zinc-950 dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100 dark:focus:border-zinc-100"
+          className="form-field mt-2 min-h-32 w-full"
           id={bodyId}
           maxLength={2000}
           name="body"
@@ -132,7 +126,7 @@ export function CommentForm({
       ) : null}
 
       <button
-        className="border border-zinc-950 bg-zinc-950 px-4 py-2 text-sm font-medium text-white disabled:cursor-not-allowed disabled:opacity-60 dark:border-zinc-100 dark:bg-zinc-100 dark:text-zinc-950"
+        className="action-link action-primary border border-zinc-950 disabled:cursor-not-allowed disabled:opacity-60 dark:border-zinc-100"
         disabled={isSubmitting}
         type="submit"
       >
