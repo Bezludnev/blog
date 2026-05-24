@@ -107,6 +107,14 @@ Blog discovery path:
    that tag appear.
 5. Open `/rss.xml` and verify the feed includes published posts with absolute
    `/blog/<slug>` links.
+6. Create more than 10 published posts and verify `/blog?page=2` shows the next
+   page.
+7. Verify `/blog?q=<term>&page=2` keeps the search term in pagination links
+   when the search has more than 10 matches.
+8. Verify `/tags/<slug>?page=2` works for a tag with more than 10 published
+   posts.
+9. Open `/blog?page=999` and `/tags/<slug>?page=999` and verify they return
+   404.
 
 Analytics path:
 
