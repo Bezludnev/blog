@@ -71,6 +71,7 @@ export interface Config {
     media: Media;
     tags: Tag;
     posts: Post;
+    'curated-links': CuratedLink;
     'post-metrics': PostMetric;
     projects: Project;
     comments: Comment;
@@ -85,6 +86,7 @@ export interface Config {
     media: MediaSelect<false> | MediaSelect<true>;
     tags: TagsSelect<false> | TagsSelect<true>;
     posts: PostsSelect<false> | PostsSelect<true>;
+    'curated-links': CuratedLinksSelect<false> | CuratedLinksSelect<true>;
     'post-metrics': PostMetricsSelect<false> | PostMetricsSelect<true>;
     projects: ProjectsSelect<false> | ProjectsSelect<true>;
     comments: CommentsSelect<false> | CommentsSelect<true>;
@@ -244,6 +246,29 @@ export interface Post {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "curated-links".
+ */
+export interface CuratedLink {
+  id: string;
+  title: string;
+  slug: string;
+  url: string;
+  source?: string | null;
+  type: 'article' | 'video' | 'tool' | 'repo' | 'other';
+  summary: string;
+  note?: string | null;
+  tags?: (string | Tag)[] | null;
+  status: 'draft' | 'published' | 'archived';
+  publishedAt?: string | null;
+  featured?: boolean | null;
+  sortOrder?: number | null;
+  seoTitle?: string | null;
+  seoDescription?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "post-metrics".
  */
 export interface PostMetric {
@@ -360,6 +385,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'posts';
         value: string | Post;
+      } | null)
+    | ({
+        relationTo: 'curated-links';
+        value: string | CuratedLink;
       } | null)
     | ({
         relationTo: 'post-metrics';
@@ -507,6 +536,28 @@ export interface PostsSelect<T extends boolean = true> {
   author?: T;
   publishedAt?: T;
   readingTime?: T;
+  seoTitle?: T;
+  seoDescription?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "curated-links_select".
+ */
+export interface CuratedLinksSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  url?: T;
+  source?: T;
+  type?: T;
+  summary?: T;
+  note?: T;
+  tags?: T;
+  status?: T;
+  publishedAt?: T;
+  featured?: T;
+  sortOrder?: T;
   seoTitle?: T;
   seoDescription?: T;
   updatedAt?: T;

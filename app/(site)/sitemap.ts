@@ -29,6 +29,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: now,
     },
     {
+      url: absoluteUrl("/feed"),
+      lastModified: now,
+    },
+    {
       url: absoluteUrl("/projects"),
       lastModified: now,
     },

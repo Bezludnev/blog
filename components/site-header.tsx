@@ -16,6 +16,9 @@ export function SiteHeader() {
           <Link className="hover:text-zinc-950 dark:hover:text-zinc-100" href="/projects">
             Projects
           </Link>
+          <Link className="hover:text-zinc-950 dark:hover:text-zinc-100" href="/feed">
+            Feed
+          </Link>
           <Link className="hover:text-zinc-950 dark:hover:text-zinc-100" href="/blog">
             Blog
           </Link>

@@ -4,6 +4,7 @@ import { describe, it } from "node:test";
 import {
   getAllRevalidationPaths,
   getCommentRevalidationPaths,
+  getCuratedLinkRevalidationPaths,
   getPostRevalidationPaths,
   getProjectRevalidationPaths,
   getRevalidationPathsForTarget,
@@ -57,6 +58,7 @@ describe("known path mapping", () => {
       }),
       [
         "/blog",
+        "/",
         "/rss.xml",
         "/sitemap.xml",
         "/blog/new-post",
@@ -75,6 +77,7 @@ describe("known path mapping", () => {
       }),
       [
         "/projects",
+        "/",
         "/sitemap.xml",
         "/projects/new-project",
         "/projects/old-project",
@@ -88,6 +91,14 @@ describe("known path mapping", () => {
     ]);
   });
 
+  it("returns curated feed paths", () => {
+    assert.deepEqual(getCuratedLinkRevalidationPaths(), [
+      "/feed",
+      "/",
+      "/sitemap.xml",
+    ]);
+  });
+
   it("deduplicates all-content paths", () => {
     assert.deepEqual(getAllRevalidationPaths(), [
       "/",
@@ -97,6 +108,7 @@ describe("known path mapping", () => {
       "/blog",
       "/rss.xml",
       "/projects",
+      "/feed",
     ]);
   });
 });
@@ -105,7 +117,20 @@ describe("getRevalidationPathsForTarget", () => {
   it("maps known route targets", () => {
     assert.deepEqual(getRevalidationPathsForTarget({ target: "posts" }), [
       "/blog",
+      "/",
       "/rss.xml",
+      "/sitemap.xml",
+    ]);
+
+    assert.deepEqual(getRevalidationPathsForTarget({ target: "curated-links" }), [
+      "/feed",
+      "/",
+      "/sitemap.xml",
+    ]);
+
+    assert.deepEqual(getRevalidationPathsForTarget({ target: "curated-link" }), [
+      "/feed",
+      "/",
       "/sitemap.xml",
     ]);
   });
@@ -120,6 +145,7 @@ describe("getRevalidationPathsForTarget", () => {
       }),
       [
         "/blog",
+        "/",
         "/rss.xml",
         "/sitemap.xml",
         "/blog/new-post",

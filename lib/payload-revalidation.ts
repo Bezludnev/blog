@@ -10,6 +10,7 @@ import type { Comment, Post, Project, Tag } from "@/payload-types";
 
 import {
   getCommentRevalidationPaths,
+  getCuratedLinkRevalidationPaths,
   getPostRevalidationPaths,
   getProjectRevalidationPaths,
   getSiteRevalidationPaths,
@@ -123,6 +124,19 @@ export const revalidateProjectAfterDelete: CollectionAfterDeleteHook<Project> =
         previousSlug: getPublishedSlug(doc),
       }),
     );
+  };
+
+export const revalidateCuratedLinkAfterChange: CollectionAfterChangeHook = ({
+  doc,
+}) => {
+  runRevalidation(getCuratedLinkRevalidationPaths());
+
+  return doc;
+};
+
+export const revalidateCuratedLinkAfterDelete: CollectionAfterDeleteHook =
+  () => {
+    runRevalidation(getCuratedLinkRevalidationPaths());
   };
 
 export const revalidateCommentAfterChange: CollectionAfterChangeHook<Comment> =

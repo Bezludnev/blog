@@ -160,6 +160,18 @@ Project CMS path:
 3. Open `/projects/<slug>`.
 4. Change it to `draft` and verify the public pages hide it.
 
+Curated feed and home path:
+
+1. Start MongoDB and `pnpm dev`.
+2. Open `/admin` and create a curated link with `status=draft`.
+3. Verify it does not appear on `/feed` or `/`.
+4. Publish the curated link.
+5. Verify it appears on `/feed`.
+6. Verify recent curated links appear on `/`.
+7. Mark a project as `featured` and verify it appears on `/`.
+8. Open `/sitemap.xml` and verify `/feed` is present.
+9. Toggle dark theme and verify `/` and `/feed` remain readable.
+
 About and contact CMS path:
 
 1. Open `/admin` and update Site Settings with headline, bio, contact email,
@@ -172,7 +184,7 @@ Revalidation path:
 
 1. Set `REVALIDATION_SECRET` locally and start MongoDB plus `pnpm dev`.
 2. Edit or publish a post in `/admin`.
-3. Verify `/blog`, `/blog/<slug>`, `/rss.xml`, and `/sitemap.xml` update
+3. Verify `/`, `/blog`, `/blog/<slug>`, `/rss.xml`, and `/sitemap.xml` update
    after the next request.
 4. Approve a pending comment and verify `/blog/<slug>` updates.
 5. POST to `/api/revalidate` with an invalid secret and confirm `401`.
