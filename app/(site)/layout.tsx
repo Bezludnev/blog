@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { VercelInsights } from "@/components/vercel-insights";
+import { getThemeBootstrapScript } from "@/lib/theme";
 import "../globals.css";
 
 export const metadata: Metadata = {
@@ -13,7 +14,10 @@ export default function SiteLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="h-full antialiased">
+    <html lang="en" className="h-full antialiased" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: getThemeBootstrapScript() }} />
+      </head>
       <body className="min-h-full flex flex-col">
         {children}
         <VercelInsights />

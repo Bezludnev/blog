@@ -71,6 +71,7 @@ export interface Config {
     media: Media;
     tags: Tag;
     posts: Post;
+    'post-metrics': PostMetric;
     projects: Project;
     comments: Comment;
     'payload-kv': PayloadKv;
@@ -84,6 +85,7 @@ export interface Config {
     media: MediaSelect<false> | MediaSelect<true>;
     tags: TagsSelect<false> | TagsSelect<true>;
     posts: PostsSelect<false> | PostsSelect<true>;
+    'post-metrics': PostMetricsSelect<false> | PostMetricsSelect<true>;
     projects: ProjectsSelect<false> | ProjectsSelect<true>;
     comments: CommentsSelect<false> | CommentsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
@@ -242,6 +244,27 @@ export interface Post {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "post-metrics".
+ */
+export interface PostMetric {
+  id: string;
+  metricKey: string;
+  post: string | Post;
+  date: string;
+  views: number;
+  uniqueViewsApprox: number;
+  visitorHashes?:
+    | {
+        value: string;
+        id?: string | null;
+      }[]
+    | null;
+  lastViewedAt?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "projects".
  */
 export interface Project {
@@ -337,6 +360,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'posts';
         value: string | Post;
+      } | null)
+    | ({
+        relationTo: 'post-metrics';
+        value: string | PostMetric;
       } | null)
     | ({
         relationTo: 'projects';
@@ -482,6 +509,26 @@ export interface PostsSelect<T extends boolean = true> {
   readingTime?: T;
   seoTitle?: T;
   seoDescription?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "post-metrics_select".
+ */
+export interface PostMetricsSelect<T extends boolean = true> {
+  metricKey?: T;
+  post?: T;
+  date?: T;
+  views?: T;
+  uniqueViewsApprox?: T;
+  visitorHashes?:
+    | T
+    | {
+        value?: T;
+        id?: T;
+      };
+  lastViewedAt?: T;
   updatedAt?: T;
   createdAt?: T;
 }

@@ -127,6 +127,25 @@ Analytics path:
 5. Deploy and confirm page views and Speed Insights appear in Vercel after the
    normal dashboard delay.
 
+Post metrics path:
+
+1. Start MongoDB and `pnpm dev`.
+2. Open a published post at `/blog/<slug>`.
+3. Open `/admin` and verify a `PostMetrics` row exists for the post and UTC
+   date.
+4. Refresh the post and verify `views` increments.
+5. Confirm raw IP and raw user-agent values are not stored.
+
+Dark theme path:
+
+1. Start `pnpm dev`.
+2. Open `/`, `/blog`, `/blog/<slug>`, `/projects`, `/about`, and `/contact`.
+3. Toggle dark mode from the public header.
+4. Refresh and verify the selected theme persists.
+5. Clear local storage and verify the system preference is used.
+6. Open `/admin` and verify Payload admin is not wrapped by the public header
+   or toggle.
+
 Project CMS path:
 
 1. Create a project in `/admin` with `status=published`.
