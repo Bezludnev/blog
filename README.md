@@ -227,4 +227,31 @@ Manual media path with Blob credentials:
 ## Deployment
 
 The target stack is Vercel Hobby plus MongoDB Atlas Free Tier. Configure the
-same environment variables in Vercel before deploying.
+same environment variables in Vercel before deploying. Use
+[`docs/deployment-checklist.md`](docs/deployment-checklist.md) for launch
+acceptance evidence.
+
+## Backups
+
+Manual MongoDB exports use `mongodump` and write to `backups/<timestamp>/` by
+default. The backup output directory is ignored by git.
+
+Local dry-run:
+
+```bash
+DATABASE_URI=mongodb://127.0.0.1:27017/blog scripts/backup-mongo.sh --dry-run
+```
+
+Local export:
+
+```bash
+DATABASE_URI=mongodb://127.0.0.1:27017/blog make backup-mongo
+```
+
+Atlas export:
+
+```bash
+DATABASE_URI="mongodb+srv://<user>:<password>@<cluster>/<database>" \
+  BACKUP_DIR=backups/atlas-$(date -u +"%Y%m%dT%H%M%SZ") \
+  make backup-mongo
+```

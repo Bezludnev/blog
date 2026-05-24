@@ -1,4 +1,4 @@
-.PHONY: help env install dev start build lint test-e2e generate generate-importmap generate-types verify payload mongo-up mongo-down mongo-logs compose-up compose-down compose-logs
+.PHONY: help env install dev start build lint test-e2e generate generate-importmap generate-types verify payload backup-mongo mongo-up mongo-down mongo-logs compose-up compose-down compose-logs
 
 ARGS ?=
 
@@ -38,6 +38,9 @@ verify: generate lint build ## Run the standard local verification sequence.
 
 payload: ## Run a Payload CLI command, for example: make payload ARGS="generate:types".
 	pnpm payload $(ARGS)
+
+backup-mongo: ## Export MongoDB with mongodump. Set DATABASE_URI and optional BACKUP_DIR.
+	scripts/backup-mongo.sh
 
 mongo-up: ## Start only the local MongoDB container.
 	docker compose up -d mongo
