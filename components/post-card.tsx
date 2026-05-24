@@ -37,12 +37,13 @@ export function PostCard({ post }: { post: Post }) {
       {tags.length > 0 ? (
         <div className="mt-4 flex flex-wrap gap-2">
           {tags.map((tag) => (
-            <span
+            <Link
               className="rounded border border-zinc-200 px-2 py-1 text-xs text-zinc-600"
+              href={`/tags/${tag.slug}`}
               key={tag.id}
             >
               {tag.name}
-            </span>
+            </Link>
           ))}
         </div>
       ) : null}

@@ -85,6 +85,18 @@ Manual CMS path:
 4. Verify the post appears at `/blog` and renders at `/blog/<slug>`.
 5. Change the post to `draft` and verify it disappears from public pages.
 
+Blog discovery path:
+
+1. Create two published posts and one draft post with distinct titles,
+   excerpts, content text, and tags.
+2. Open `/blog?q=<published-term>` and verify the matching published post
+   appears.
+3. Open `/blog?q=<draft-only-term>` and verify the draft post is absent.
+4. Open `/tags/<slug>` for an existing tag and verify only published posts with
+   that tag appear.
+5. Open `/rss.xml` and verify the feed includes published posts with absolute
+   `/blog/<slug>` links.
+
 Project CMS path:
 
 1. Create a project in `/admin` with `status=published`.
