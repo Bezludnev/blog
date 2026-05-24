@@ -74,7 +74,7 @@ export function ThemeToggle() {
     <button
       aria-label={isDark ? "Switch to light theme" : "Switch to dark theme"}
       aria-checked={isDark}
-      className="inline-flex h-8 w-14 shrink-0 items-center rounded-full border border-zinc-300 bg-zinc-100 p-1 text-zinc-700 transition-colors hover:border-zinc-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-zinc-950 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-950 dark:focus-visible:outline-zinc-100"
+      className="theme-toggle"
       onClick={toggleTheme}
       role="switch"
       suppressHydrationWarning
@@ -82,8 +82,8 @@ export function ThemeToggle() {
     >
       <span
         aria-hidden="true"
-        className={`inline-flex h-6 w-6 items-center justify-center rounded-full bg-white shadow-sm ring-1 ring-zinc-300 transition-transform dark:bg-zinc-100 dark:ring-zinc-600 ${
-          isDark ? "translate-x-6" : "translate-x-0"
+        className={`theme-toggle-thumb ${
+          isDark ? "theme-toggle-thumb-dark" : ""
         }`}
         suppressHydrationWarning
       >

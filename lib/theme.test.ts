@@ -62,4 +62,54 @@ describe("theme toggle hydration", () => {
     assert.match(toggleSource, /useState<StoredTheme>\("light"\)/);
     assert.doesNotMatch(toggleSource, /useState<StoredTheme>\(\(\) =>/);
   });
+
+  it("keeps animated press and hover states on the switch", () => {
+    const toggleSource = readFileSync(
+      new URL("../components/theme-toggle.tsx", import.meta.url),
+      "utf8",
+    );
+    const stylesSource = readFileSync(
+      new URL("../app/globals.css", import.meta.url),
+      "utf8",
+    );
+
+    assert.match(toggleSource, /className="theme-toggle"/);
+    assert.match(stylesSource, /\.theme-toggle/);
+    assert.match(stylesSource, /\.theme-toggle:hover/);
+    assert.match(stylesSource, /\.theme-toggle:active/);
+  });
+});
+
+describe("public visual theme tokens", () => {
+  it("uses shared editorial color tokens in global public styles", () => {
+    const stylesSource = readFileSync(
+      new URL("../app/globals.css", import.meta.url),
+      "utf8",
+    );
+
+    assert.match(stylesSource, /--surface:/);
+    assert.match(stylesSource, /--surface-muted:/);
+    assert.match(stylesSource, /--accent:/);
+    assert.match(stylesSource, /var\(--surface\)/);
+    assert.match(stylesSource, /var\(--accent\)/);
+  });
+
+  it("keeps theme variable styling in CSS instead of TSX arbitrary classes", () => {
+    const tsxSources = [
+      "../app/(site)/about/page.tsx",
+      "../app/(site)/blog/page.tsx",
+      "../app/(site)/page.tsx",
+      "../components/comments-section.tsx",
+      "../components/curated-link-card.tsx",
+      "../components/pagination.tsx",
+      "../components/rich-text.tsx",
+      "../components/theme-toggle.tsx",
+    ]
+      .map((path) => readFileSync(new URL(path, import.meta.url), "utf8"))
+      .join("\n");
+
+    assert.doesNotMatch(tsxSources, /\[var\(--/);
+    assert.doesNotMatch(tsxSources, /transition-\[/);
+    assert.doesNotMatch(tsxSources, /shadow-\[/);
+  });
 });

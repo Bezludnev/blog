@@ -42,7 +42,7 @@ function SectionHeader({
     <div className="flex items-center justify-between gap-4">
       <h2 className="card-title">{title}</h2>
       <Link
-        className="text-link text-sm font-medium text-zinc-600 dark:text-zinc-400"
+        className="text-link section-view-link"
         href={href}
       >
         View all
@@ -86,9 +86,6 @@ export default async function Home() {
           </Link>
           <Link className="action-link action-secondary" href="/contact">
             Contact
-          </Link>
-          <Link className="action-link action-secondary" href="/admin">
-            Open admin
           </Link>
         </div>
         <section className="mt-16">

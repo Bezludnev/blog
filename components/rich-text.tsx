@@ -37,7 +37,7 @@ function renderText(node: LexicalTextNode, key: string) {
   if (hasFormat(node.format, 16, "code")) {
     content = (
       <code
-        className="rounded bg-zinc-100 px-1 py-0.5 text-sm text-zinc-900 dark:bg-zinc-800 dark:text-zinc-100"
+        className="rich-code"
         key={`${key}-code`}
       >
         {content}
@@ -79,7 +79,7 @@ function renderNode(node: LexicalNode, key: string): ReactNode {
       }
 
       return (
-        <h3 className="mt-8 text-xl font-semibold text-zinc-950 dark:text-zinc-100" key={key}>
+        <h3 className="rich-heading" key={key}>
           {children}
         </h3>
       );
@@ -103,7 +103,7 @@ function renderNode(node: LexicalNode, key: string): ReactNode {
     case "quote":
       return (
         <blockquote
-          className="body-copy my-6 border-l-2 border-zinc-300 pl-4 dark:border-zinc-700"
+          className="body-copy rich-quote my-6"
           key={key}
         >
           {children}

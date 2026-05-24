@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import { describe, it } from "node:test";
 
 import {
@@ -39,6 +40,7 @@ describe("site settings fallbacks", () => {
     const settings = {
       navigation: [
         { label: " Writing ", url: " /blog " },
+        { label: "Admin", url: "/admin" },
         { label: "Elsewhere", newTab: true, url: "https://example.com" },
         { label: " ", url: "/empty-label" },
         { label: "Missing URL", url: " " },
@@ -58,8 +60,17 @@ describe("site settings fallbacks", () => {
       { label: "Feed", newTab: false, url: "/feed" },
       { label: "Blog", newTab: false, url: "/blog" },
       { label: "Contact", newTab: false, url: "/contact" },
-      { label: "Admin", newTab: false, url: "/admin" },
     ]);
+  });
+
+  it("does not render public links to the admin route", () => {
+    const homeSource = readFileSync(
+      new URL("../app/(site)/page.tsx", import.meta.url),
+      "utf8",
+    );
+
+    assert.doesNotMatch(homeSource, /href="\/admin"/);
+    assert.doesNotMatch(homeSource, /Open admin/);
   });
 
   it("prefers SEO defaults and falls back to current site values", () => {

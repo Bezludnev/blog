@@ -55,24 +55,24 @@ export default async function BlogPage({ searchParams }: Args) {
         </p>
         <form action="/blog" className="mt-8 flex max-w-2xl gap-3" method="GET">
           <input
-            className="form-field min-w-0 flex-1 dark:bg-zinc-900"
+            className="form-field min-w-0 flex-1"
             defaultValue={query}
             name="q"
             placeholder="Search posts"
             type="search"
           />
           <button
-            className="action-link action-primary border border-zinc-950 dark:border-zinc-100"
+            className="action-link action-primary"
             type="submit"
           >
             Search
           </button>
         </form>
         {query ? (
-          <div className="mt-4 flex flex-wrap items-center gap-3 text-sm text-zinc-600 dark:text-zinc-400">
+          <div className="search-summary">
             <p>
               Search results for{" "}
-              <span className="font-medium text-zinc-950 dark:text-zinc-100">{query}</span>
+              <span className="search-summary-term">{query}</span>
             </p>
             <Link className="text-link" href="/blog">
               Clear search
