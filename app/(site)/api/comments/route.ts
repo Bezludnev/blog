@@ -8,6 +8,7 @@ import {
   getCommentRateLimitWindowStart,
   isCommentRateLimitExceeded,
 } from "@/lib/comment-rate-limit";
+import { getRelationshipId } from "@/lib/comment-replies";
 import { validateCommentInput } from "@/lib/comment-validation";
 import { getPayloadClient } from "@/lib/payload";
 
@@ -39,6 +40,43 @@ async function parseRequestJson(request: Request) {
   } catch {
     return null;
   }
+}
+
+async function resolveReplyParent({
+  parentCommentId,
+  payload,
+  postId,
+}: {
+  parentCommentId: string;
+  payload: Awaited<ReturnType<typeof getPayloadClient>>;
+  postId: string;
+}) {
+  const parentComment = await payload
+    .findByID({
+      collection: "comments",
+      depth: 0,
+      id: parentCommentId,
+      overrideAccess: true,
+    })
+    .catch(() => null);
+
+  if (!parentComment) {
+    return { message: "Parent comment is invalid.", ok: false as const };
+  }
+
+  if (parentComment.status !== "approved") {
+    return { message: "Parent comment is invalid.", ok: false as const };
+  }
+
+  if (getRelationshipId(parentComment.post) !== postId) {
+    return { message: "Parent comment is invalid.", ok: false as const };
+  }
+
+  if (getRelationshipId(parentComment.parentComment)) {
+    return { message: "Cannot reply to a reply.", ok: false as const };
+  }
+
+  return { ok: true as const, parentCommentId: parentComment.id };
 }
 
 export async function POST(request: Request) {
@@ -87,6 +125,25 @@ export async function POST(request: Request) {
       return NextResponse.json({ message: "Post not found." }, { status: 404 });
     }
 
+    let parentComment: string | undefined;
+
+    if (input.value.parentCommentId) {
+      const parentResult = await resolveReplyParent({
+        parentCommentId: input.value.parentCommentId,
+        payload,
+        postId: post.id,
+      });
+
+      if (!parentResult.ok) {
+        return NextResponse.json(
+          { message: parentResult.message },
+          { status: 400 },
+        );
+      }
+
+      parentComment = parentResult.parentCommentId;
+    }
+
     const ipHash = hashValue(getClientIp(request));
     const userAgentHash = hashValue(request.headers.get("user-agent"));
     const rateLimitConfig = getCommentRateLimitConfig();
@@ -115,16 +172,19 @@ export async function POST(request: Request) {
       }
     }
 
+    const commentData = {
+      authorName: input.value.authorName,
+      body: input.value.body,
+      ipHash,
+      ...(parentComment ? { parentComment } : {}),
+      post: post.id,
+      status: "pending" as const,
+      userAgentHash,
+    };
+
     await payload.create({
       collection: "comments",
-      data: {
-        authorName: input.value.authorName,
-        body: input.value.body,
-        ipHash,
-        post: post.id,
-        status: "pending",
-        userAgentHash,
-      },
+      data: commentData,
       overrideAccess: true,
     });
 

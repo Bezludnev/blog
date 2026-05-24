@@ -4,6 +4,7 @@ export const MAX_COMMENT_BODY_LENGTH = 2000;
 type CommentInput = {
   authorName?: unknown;
   body?: unknown;
+  parentCommentId?: unknown;
   postSlug?: unknown;
   website?: unknown;
 };
@@ -11,6 +12,7 @@ type CommentInput = {
 type ValidCommentInput = {
   authorName: string;
   body: string;
+  parentCommentId?: string;
   postSlug: string;
   website: string;
 };
@@ -34,6 +36,7 @@ export function validateCommentInput(
 ): CommentValidationResult {
   const authorName = asString(input.authorName);
   const body = asString(input.body);
+  const parentCommentId = asString(input.parentCommentId);
   const postSlug = asString(input.postSlug);
   const website = asString(input.website);
 
@@ -62,6 +65,7 @@ export function validateCommentInput(
     value: {
       authorName,
       body,
+      ...(parentCommentId ? { parentCommentId } : {}),
       postSlug,
       website,
     },

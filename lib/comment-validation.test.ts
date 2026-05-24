@@ -27,6 +27,38 @@ describe("validateCommentInput", () => {
     }
   });
 
+  it("accepts optional parent comment IDs for replies", () => {
+    const result = validateCommentInput({
+      authorName: "Ada",
+      body: "Reply body",
+      parentCommentId: " parent-comment-id ",
+      postSlug: "hello-world",
+      website: "",
+    });
+
+    assert.equal(result.ok, true);
+
+    if (result.ok) {
+      assert.equal(result.value.parentCommentId, "parent-comment-id");
+    }
+  });
+
+  it("omits blank parent comment IDs for top-level comments", () => {
+    const result = validateCommentInput({
+      authorName: "Ada",
+      body: "Top-level body",
+      parentCommentId: " ",
+      postSlug: "hello-world",
+      website: "",
+    });
+
+    assert.equal(result.ok, true);
+
+    if (result.ok) {
+      assert.equal(result.value.parentCommentId, undefined);
+    }
+  });
+
   it("rejects empty required fields", () => {
     const result = validateCommentInput({
       authorName: " ",
