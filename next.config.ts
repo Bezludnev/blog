@@ -4,6 +4,7 @@ import type { NextConfig } from "next";
 const blobHostname = process.env.NEXT_PUBLIC_BLOB_HOSTNAME;
 
 const nextConfig: NextConfig = {
+  allowedDevOrigins: ["127.0.0.1"],
   images: {
     remotePatterns: blobHostname
       ? [

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { VercelInsights } from "@/components/vercel-insights";
 import "../globals.css";
 
 export const metadata: Metadata = {
@@ -13,7 +14,10 @@ export default function SiteLayout({
 }>) {
   return (
     <html lang="en" className="h-full antialiased">
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        {children}
+        <VercelInsights />
+      </body>
     </html>
   );
 }
