@@ -15,7 +15,7 @@ type Args = {
   }>;
 };
 
-export const dynamic = "force-dynamic";
+export const revalidate = 3600;
 
 function formatDate(value?: null | string) {
   if (!value) return "Unpublished";

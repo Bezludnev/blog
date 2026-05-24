@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   description: "Profile, experience, and engineering focus.",
 };
 
-export const dynamic = "force-dynamic";
+export const revalidate = 3600;
 
 export default async function AboutPage() {
   const settings = await getSiteSettings();

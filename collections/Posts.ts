@@ -1,5 +1,9 @@
 import type { CollectionConfig } from "payload";
 
+import {
+  revalidatePostAfterChange,
+  revalidatePostAfterDelete,
+} from "../lib/payload-revalidation.ts";
 import { isAdmin, publishedOrAdmin } from "./access.ts";
 
 export const Posts: CollectionConfig = {
@@ -13,6 +17,10 @@ export const Posts: CollectionConfig = {
     read: publishedOrAdmin,
     update: isAdmin,
     delete: isAdmin,
+  },
+  hooks: {
+    afterChange: [revalidatePostAfterChange],
+    afterDelete: [revalidatePostAfterDelete],
   },
   fields: [
     {

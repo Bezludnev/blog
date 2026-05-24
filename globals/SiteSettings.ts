@@ -1,12 +1,16 @@
 import type { GlobalConfig } from "payload";
 
 import { isAdmin } from "../collections/access.ts";
+import { revalidateSiteSettingsAfterChange } from "../lib/payload-revalidation.ts";
 
 export const SiteSettings: GlobalConfig = {
   slug: "site-settings",
   access: {
     read: () => true,
     update: isAdmin,
+  },
+  hooks: {
+    afterChange: [revalidateSiteSettingsAfterChange],
   },
   fields: [
     {

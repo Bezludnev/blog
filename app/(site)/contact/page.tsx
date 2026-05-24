@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   description: "Ways to contact the author.",
 };
 
-export const dynamic = "force-dynamic";
+export const revalidate = 3600;
 
 export default async function ContactPage() {
   const settings = await getSiteSettings();
