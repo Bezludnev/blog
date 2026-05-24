@@ -5,6 +5,7 @@ import path from "path";
 import { buildConfig } from "payload";
 import { fileURLToPath } from "url";
 
+import { CuratedLinks } from "./collections/CuratedLinks.ts";
 import { Media } from "./collections/Media.ts";
 import { Posts } from "./collections/Posts.ts";
 import { PostMetrics } from "./collections/PostMetrics.ts";
@@ -42,7 +43,16 @@ export default buildConfig({
       importMapFile: path.resolve(dirname, "app/(payload)/admin/importMap.js"),
     },
   },
-  collections: [Users, Media, Tags, Posts, PostMetrics, Projects, Comments],
+  collections: [
+    Users,
+    Media,
+    Tags,
+    Posts,
+    CuratedLinks,
+    PostMetrics,
+    Projects,
+    Comments,
+  ],
   db: mongooseAdapter({
     url: databaseUri,
   }),

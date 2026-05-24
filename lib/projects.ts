@@ -38,6 +38,33 @@ export async function getPublishedProjects() {
   return sortProjects(result.docs as Project[]);
 }
 
+export async function getFeaturedProjects(limit = 3) {
+  const payload = await getPayloadClient();
+
+  const result = await payload.find({
+    collection: "projects",
+    depth: 2,
+    limit,
+    sort: "sortOrder",
+    where: {
+      and: [
+        {
+          status: {
+            equals: "published",
+          },
+        },
+        {
+          featured: {
+            equals: true,
+          },
+        },
+      ],
+    },
+  });
+
+  return sortProjects(result.docs as Project[]).slice(0, limit);
+}
+
 export async function getPublishedProjectBySlug(slug: string) {
   const payload = await getPayloadClient();
 

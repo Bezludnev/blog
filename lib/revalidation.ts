@@ -67,6 +67,7 @@ export function getPostRevalidationPaths(input: PostPathInput = {}) {
 
   return uniquePaths([
     "/blog",
+    "/",
     "/rss.xml",
     "/sitemap.xml",
     slug ? `/blog/${slug}` : undefined,
@@ -81,6 +82,7 @@ export function getProjectRevalidationPaths(input: ProjectPathInput = {}) {
 
   return uniquePaths([
     "/projects",
+    "/",
     "/sitemap.xml",
     slug ? `/projects/${slug}` : undefined,
     previousSlug ? `/projects/${previousSlug}` : undefined,
@@ -93,11 +95,16 @@ export function getCommentRevalidationPaths(postSlug: unknown) {
   return uniquePaths([slug ? `/blog/${slug}` : undefined]);
 }
 
+export function getCuratedLinkRevalidationPaths() {
+  return ["/feed", "/", "/sitemap.xml"];
+}
+
 export function getAllRevalidationPaths() {
   return uniquePaths([
     ...getSiteRevalidationPaths(),
     ...getPostRevalidationPaths(),
     ...getProjectRevalidationPaths(),
+    ...getCuratedLinkRevalidationPaths(),
   ]);
 }
 
@@ -111,6 +118,9 @@ export function getRevalidationPathsForTarget(input: RevalidationTargetInput) {
       return getPostRevalidationPaths();
     case "projects":
       return getProjectRevalidationPaths();
+    case "curated-links":
+    case "curated-link":
+      return getCuratedLinkRevalidationPaths();
     case "post":
       return getPostRevalidationPaths({
         previousSlug: normalizeSlug(input.previousSlug),
