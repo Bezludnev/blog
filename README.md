@@ -45,6 +45,9 @@ The first admin user is created through Payload's initial auth flow at
   It must start with `vercel_blob_rw_`. Keep this token out of git.
 - `NEXT_PUBLIC_BLOB_HOSTNAME`: exact public Blob hostname for `next/image`,
   for example `<store-id>.public.blob.vercel-storage.com`.
+- `ANALYTICS_ENABLED`: non-secret flag for Vercel Web Analytics and Speed
+  Insights. Keep `false` locally. Set to `true` in Vercel preview/production
+  after enabling Web Analytics and Speed Insights for the project.
 
 For production, point `DATABASE_URI` to MongoDB Atlas Free Tier.
 
@@ -96,6 +99,17 @@ Blog discovery path:
    that tag appear.
 5. Open `/rss.xml` and verify the feed includes published posts with absolute
    `/blog/<slug>` links.
+
+Analytics path:
+
+1. Keep `ANALYTICS_ENABLED=false` locally and verify `pnpm build` passes.
+2. Temporarily set `ANALYTICS_ENABLED=true` and verify public pages still
+   render.
+3. In Vercel, enable Web Analytics and Speed Insights for the project.
+4. Set `ANALYTICS_ENABLED=true` in Vercel preview/production environment
+   variables.
+5. Deploy and confirm page views and Speed Insights appear in Vercel after the
+   normal dashboard delay.
 
 Project CMS path:
 
