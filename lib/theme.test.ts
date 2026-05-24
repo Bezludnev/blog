@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import { describe, it } from "node:test";
 
 import {
@@ -33,5 +34,32 @@ describe("getThemeBootstrapScript", () => {
     assert.match(script, /classList/);
     assert.match(script, /dark/);
     assert.match(script, /prefers-color-scheme/);
+  });
+});
+
+describe("site theme bootstrap layout", () => {
+  it("uses Next Script instead of rendering a raw script tag", () => {
+    const layoutSource = readFileSync(
+      new URL("../app/(site)/layout.tsx", import.meta.url),
+      "utf8",
+    );
+
+    assert.match(layoutSource, /from "next\/script"/);
+    assert.match(layoutSource, /<Script\b/);
+    assert.match(layoutSource, /id="theme-bootstrap"/);
+    assert.match(layoutSource, /strategy="beforeInteractive"/);
+    assert.doesNotMatch(layoutSource, /<script\b/);
+  });
+});
+
+describe("theme toggle hydration", () => {
+  it("uses the same initial theme state on the server and client", () => {
+    const toggleSource = readFileSync(
+      new URL("../components/theme-toggle.tsx", import.meta.url),
+      "utf8",
+    );
+
+    assert.match(toggleSource, /useState<StoredTheme>\("light"\)/);
+    assert.doesNotMatch(toggleSource, /useState<StoredTheme>\(\(\) =>/);
   });
 });

@@ -50,11 +50,7 @@ function MoonIcon() {
 }
 
 export function ThemeToggle() {
-  const [theme, setTheme] = useState<StoredTheme>(() => {
-    if (typeof document === "undefined") return "light";
-
-    return getDocumentTheme();
-  });
+  const [theme, setTheme] = useState<StoredTheme>("light");
   const isDark = theme === "dark";
 
   useEffect(() => {
