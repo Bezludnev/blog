@@ -88,6 +88,13 @@ pnpm lint
 pnpm build
 ```
 
+Automated browser smoke path:
+
+```bash
+docker compose up -d mongo
+pnpm test:e2e
+```
+
 Manual CMS path:
 
 1. Start MongoDB and `pnpm dev`.

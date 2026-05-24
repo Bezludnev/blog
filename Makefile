@@ -1,4 +1,4 @@
-.PHONY: help env install dev start build lint generate generate-importmap generate-types verify payload mongo-up mongo-down mongo-logs compose-up compose-down compose-logs
+.PHONY: help env install dev start build lint test-e2e generate generate-importmap generate-types verify payload mongo-up mongo-down mongo-logs compose-up compose-down compose-logs
 
 ARGS ?=
 
@@ -22,6 +22,9 @@ build: ## Build the project for production.
 
 lint: ## Run ESLint.
 	pnpm lint
+
+test-e2e: ## Run Playwright browser smoke tests.
+	pnpm test:e2e
 
 generate: generate-importmap generate-types ## Generate Payload import map and TypeScript types.
 
