@@ -1,8 +1,25 @@
 import { notFound } from "next/navigation";
 
 import type { Post, Tag } from "../payload-types";
+import {
+  BLOG_POSTS_PER_PAGE,
+  type PaginatedResult,
+  paginateItems,
+} from "./pagination";
 import { getPayloadClient } from "./payload";
 import { postMatchesSearch } from "./search";
+
+type PublishedPostsPageInput = {
+  limit?: number;
+  page?: number;
+  query?: string;
+};
+
+type PublishedPostsByTagPageInput = {
+  limit?: number;
+  page?: number;
+  tagId: string;
+};
 
 export async function getPublishedPosts(query = "") {
   const payload = await getPayloadClient();
@@ -27,6 +44,56 @@ export async function getPublishedPosts(query = "") {
   }
 
   return posts.filter((post) => postMatchesSearch(post, normalizedQuery));
+}
+
+export async function getPublishedPostsPage({
+  limit = BLOG_POSTS_PER_PAGE,
+  page = 1,
+  query = "",
+}: PublishedPostsPageInput = {}): Promise<PaginatedResult<Post>> {
+  const payload = await getPayloadClient();
+  const normalizedQuery = query.trim();
+
+  if (!normalizedQuery) {
+    const result = await payload.find({
+      collection: "posts",
+      depth: 2,
+      limit,
+      page,
+      sort: "-publishedAt",
+      where: {
+        status: {
+          equals: "published",
+        },
+      },
+    });
+
+    return {
+      ...result,
+      docs: result.docs as Post[],
+      page: result.page ?? page,
+      prevPage: result.prevPage ?? null,
+      nextPage: result.nextPage ?? null,
+    };
+  }
+
+  const result = await payload.find({
+    collection: "posts",
+    depth: 2,
+    pagination: false,
+    sort: "-publishedAt",
+    where: {
+      status: {
+        equals: "published",
+      },
+    },
+  });
+
+  const matches = (result.docs as Post[]).filter((post) =>
+    postMatchesSearch(post, normalizedQuery),
+  );
+
+  return paginateItems(matches, page, limit);
 }
 
 export async function getPublishedPostBySlug(slug: string) {
@@ -102,6 +169,44 @@ export async function getPublishedPostsByTagId(tagId: string) {
   });
 
   return result.docs as Post[];
+}
+
+export async function getPublishedPostsByTagIdPage({
+  limit = BLOG_POSTS_PER_PAGE,
+  page = 1,
+  tagId,
+}: PublishedPostsByTagPageInput): Promise<PaginatedResult<Post>> {
+  const payload = await getPayloadClient();
+
+  const result = await payload.find({
+    collection: "posts",
+    depth: 2,
+    limit,
+    page,
+    sort: "-publishedAt",
+    where: {
+      and: [
+        {
+          status: {
+            equals: "published",
+          },
+        },
+        {
+          tags: {
+            equals: tagId,
+          },
+        },
+      ],
+    },
+  });
+
+  return {
+    ...result,
+    docs: result.docs as Post[],
+    page: result.page ?? page,
+    prevPage: result.prevPage ?? null,
+    nextPage: result.nextPage ?? null,
+  };
 }
 
 export async function getRecentPublishedPostsForFeed(limit = 20) {

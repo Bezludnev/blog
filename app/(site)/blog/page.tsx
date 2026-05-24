@@ -1,13 +1,17 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 
+import { Pagination } from "@/components/pagination";
 import { PostCard } from "@/components/post-card";
 import { SiteHeader } from "@/components/site-header";
-import { getPublishedPosts } from "@/lib/posts";
+import { isPageOutOfRange, normalizePageParam } from "@/lib/pagination";
+import { getPublishedPostsPage } from "@/lib/posts";
 import { normalizeSearchQuery } from "@/lib/search";
 
 type Args = {
   searchParams: Promise<{
+    page?: string | string[];
     q?: string | string[];
   }>;
 };
@@ -25,9 +29,14 @@ export const metadata: Metadata = {
 export const revalidate = 3600;
 
 export default async function BlogPage({ searchParams }: Args) {
-  const { q } = await searchParams;
+  const { page: pageParam, q } = await searchParams;
   const query = normalizeSearchQuery(q);
-  const posts = await getPublishedPosts(query);
+  const page = normalizePageParam(pageParam);
+  const postsPage = await getPublishedPostsPage({ page, query });
+
+  if (isPageOutOfRange(page, postsPage.totalPages, postsPage.totalDocs)) {
+    notFound();
+  }
 
   return (
     <div className="min-h-screen bg-zinc-50">
@@ -63,9 +72,9 @@ export default async function BlogPage({ searchParams }: Args) {
             </Link>
           </div>
         ) : null}
-        {posts.length > 0 ? (
+        {postsPage.docs.length > 0 ? (
           <div className="mt-8 bg-white px-6">
-            {posts.map((post) => (
+            {postsPage.docs.map((post) => (
               <PostCard key={post.id} post={post} />
             ))}
           </div>
@@ -74,6 +83,16 @@ export default async function BlogPage({ searchParams }: Args) {
             {query ? "No posts match this search." : "No published posts yet."}
           </p>
         )}
+        <Pagination
+          hasNextPage={postsPage.hasNextPage}
+          hasPrevPage={postsPage.hasPrevPage}
+          nextPage={postsPage.nextPage}
+          page={postsPage.page}
+          pathname="/blog"
+          prevPage={postsPage.prevPage}
+          query={query}
+          totalPages={postsPage.totalPages}
+        />
       </main>
     </div>
   );

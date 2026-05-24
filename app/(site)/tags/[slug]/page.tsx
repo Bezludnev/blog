@@ -1,13 +1,18 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
+import { Pagination } from "@/components/pagination";
 import { PostCard } from "@/components/post-card";
 import { SiteHeader } from "@/components/site-header";
-import { getPublishedPostsByTagId, getTagBySlug } from "@/lib/posts";
+import { isPageOutOfRange, normalizePageParam } from "@/lib/pagination";
+import { getPublishedPostsByTagIdPage, getTagBySlug } from "@/lib/posts";
 
 type Args = {
   params: Promise<{
     slug: string;
+  }>;
+  searchParams: Promise<{
+    page?: string | string[];
   }>;
 };
 
@@ -27,15 +32,24 @@ export async function generateMetadata({ params }: Args): Promise<Metadata> {
   };
 }
 
-export default async function TagPage({ params }: Args) {
+export default async function TagPage({ params, searchParams }: Args) {
   const { slug } = await params;
+  const { page: pageParam } = await searchParams;
+  const page = normalizePageParam(pageParam);
   const tag = await getTagBySlug(slug);
 
   if (!tag) {
     notFound();
   }
 
-  const posts = await getPublishedPostsByTagId(tag.id);
+  const postsPage = await getPublishedPostsByTagIdPage({
+    page,
+    tagId: tag.id,
+  });
+
+  if (isPageOutOfRange(page, postsPage.totalPages, postsPage.totalDocs)) {
+    notFound();
+  }
 
   return (
     <div className="min-h-screen bg-zinc-50">
@@ -50,9 +64,9 @@ export default async function TagPage({ params }: Args) {
         {tag.description ? (
           <p className="mt-4 max-w-2xl text-zinc-600">{tag.description}</p>
         ) : null}
-        {posts.length > 0 ? (
+        {postsPage.docs.length > 0 ? (
           <div className="mt-8 bg-white px-6">
-            {posts.map((post) => (
+            {postsPage.docs.map((post) => (
               <PostCard key={post.id} post={post} />
             ))}
           </div>
@@ -61,6 +75,15 @@ export default async function TagPage({ params }: Args) {
             No published posts use this tag yet.
           </p>
         )}
+        <Pagination
+          hasNextPage={postsPage.hasNextPage}
+          hasPrevPage={postsPage.hasPrevPage}
+          nextPage={postsPage.nextPage}
+          page={postsPage.page}
+          pathname={`/tags/${tag.slug}`}
+          prevPage={postsPage.prevPage}
+          totalPages={postsPage.totalPages}
+        />
       </main>
     </div>
   );
