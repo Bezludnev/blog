@@ -1,8 +1,10 @@
 import type {
+  CollectionBeforeChangeHook,
   CollectionBeforeValidateHook,
   CollectionConfig,
 } from "payload";
 
+import { applyCommentDeletedAt } from "../lib/comment-soft-delete.ts";
 import {
   MAX_COMMENT_BODY_LENGTH,
   MAX_COMMENT_NAME_LENGTH,
@@ -57,6 +59,13 @@ const validateCommentParent: CollectionBeforeValidateHook<Comment> = async ({
   return data;
 };
 
+const updateCommentDeletedAt: CollectionBeforeChangeHook<Comment> = ({
+  data,
+  originalDoc,
+}) => {
+  return applyCommentDeletedAt(data, originalDoc);
+};
+
 export const Comments: CollectionConfig = {
   slug: "comments",
   admin: {
@@ -71,6 +80,7 @@ export const Comments: CollectionConfig = {
   },
   hooks: {
     beforeValidate: [validateCommentParent],
+    beforeChange: [updateCommentDeletedAt],
     afterChange: [revalidateCommentAfterChange],
     afterDelete: [revalidateCommentAfterDelete],
   },
@@ -111,6 +121,16 @@ export const Comments: CollectionConfig = {
         { label: "Rejected", value: "rejected" },
         { label: "Deleted", value: "deleted" },
       ],
+    },
+    {
+      name: "deletedAt",
+      type: "date",
+      admin: {
+        date: {
+          pickerAppearance: "dayAndTime",
+        },
+        readOnly: true,
+      },
     },
     {
       name: "ipHash",

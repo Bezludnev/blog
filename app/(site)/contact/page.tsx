@@ -3,11 +3,20 @@ import Link from "next/link";
 
 import { SiteHeader } from "@/components/site-header";
 import { SocialLinks } from "@/components/social-links";
+import { canonicalUrl } from "@/lib/seo";
 import { getSiteSettings } from "@/lib/site-settings";
 
 export const metadata: Metadata = {
   title: "Contact | Personal Engineering Blog",
   description: "Ways to contact the author.",
+  alternates: {
+    canonical: canonicalUrl("/contact"),
+  },
+  openGraph: {
+    title: "Contact | Personal Engineering Blog",
+    description: "Ways to contact the author.",
+    url: canonicalUrl("/contact"),
+  },
 };
 
 export const revalidate = 3600;

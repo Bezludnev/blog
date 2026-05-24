@@ -6,6 +6,7 @@ import { PostCard } from "@/components/post-card";
 import { SiteHeader } from "@/components/site-header";
 import { isPageOutOfRange, normalizePageParam } from "@/lib/pagination";
 import { getPublishedPostsByTagIdPage, getTagBySlug } from "@/lib/posts";
+import { canonicalUrl } from "@/lib/seo";
 
 type Args = {
   params: Promise<{
@@ -26,9 +27,19 @@ export async function generateMetadata({ params }: Args): Promise<Metadata> {
     notFound();
   }
 
+  const url = canonicalUrl(`/tags/${tag.slug}`);
+
   return {
     title: `${tag.name} | Personal Engineering Blog`,
     description: tag.description || `Published posts tagged ${tag.name}.`,
+    alternates: {
+      canonical: url,
+    },
+    openGraph: {
+      title: `${tag.name} | Personal Engineering Blog`,
+      description: tag.description || `Published posts tagged ${tag.name}.`,
+      url,
+    },
   };
 }
 

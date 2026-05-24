@@ -59,6 +59,22 @@ describe("validateCommentInput", () => {
     }
   });
 
+  it("accepts optional submission start timestamps", () => {
+    const result = validateCommentInput({
+      authorName: "Ada",
+      body: "Top-level body",
+      postSlug: "hello-world",
+      startedAt: "  2026-05-24T12:00:00.000Z  ",
+      website: "",
+    });
+
+    assert.equal(result.ok, true);
+
+    if (result.ok) {
+      assert.equal(result.value.startedAt, "2026-05-24T12:00:00.000Z");
+    }
+  });
+
   it("rejects empty required fields", () => {
     const result = validateCommentInput({
       authorName: " ",
@@ -79,5 +95,61 @@ describe("validateCommentInput", () => {
     });
 
     assert.equal(result.ok, false);
+  });
+
+  it("rejects script tags in comment bodies", () => {
+    const result = validateCommentInput({
+      authorName: "Ada",
+      body: "<script>alert(1)</script>",
+      postSlug: "hello-world",
+      website: "",
+    });
+
+    assert.deepEqual(result, {
+      ok: false,
+      message: "HTML is not allowed.",
+    });
+  });
+
+  it("rejects HTML tags in comment bodies", () => {
+    const result = validateCommentInput({
+      authorName: "Ada",
+      body: "<b>bold</b>",
+      postSlug: "hello-world",
+      website: "",
+    });
+
+    assert.deepEqual(result, {
+      ok: false,
+      message: "HTML is not allowed.",
+    });
+  });
+
+  it("rejects HTML-like content in names and bodies", () => {
+    assert.deepEqual(
+      validateCommentInput({
+        authorName: "Ada <admin>",
+        body: "Useful post.",
+        postSlug: "hello-world",
+        website: "",
+      }),
+      {
+        ok: false,
+        message: "HTML is not allowed.",
+      },
+    );
+
+    assert.deepEqual(
+      validateCommentInput({
+        authorName: "Ada",
+        body: "I prefer <this> approach.",
+        postSlug: "hello-world",
+        website: "",
+      }),
+      {
+        ok: false,
+        message: "HTML is not allowed.",
+      },
+    );
   });
 });

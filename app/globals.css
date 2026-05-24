@@ -26,122 +26,124 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-@utility site-page {
-  @apply min-h-screen bg-zinc-50 dark:bg-zinc-950;
-}
+@layer components {
+  .site-page {
+    @apply min-h-screen bg-zinc-50 dark:bg-zinc-950;
+  }
 
-@utility site-main {
-  @apply mx-auto max-w-5xl px-6 py-16;
-}
+  .site-main {
+    @apply mx-auto max-w-5xl px-6 py-16;
+  }
 
-@utility site-main-home {
-  @apply mx-auto max-w-5xl px-6 py-20;
-}
+  .site-main-home {
+    @apply mx-auto max-w-5xl px-6 py-20;
+  }
 
-@utility site-main-narrow {
-  @apply mx-auto max-w-3xl px-6 py-16;
-}
+  .site-main-narrow {
+    @apply mx-auto max-w-3xl px-6 py-16;
+  }
 
-@utility page-eyebrow {
-  @apply text-sm font-medium uppercase tracking-wide text-zinc-500 dark:text-zinc-400;
-}
+  .page-eyebrow {
+    @apply text-sm font-medium uppercase tracking-wide text-zinc-500 dark:text-zinc-400;
+  }
 
-@utility page-title {
-  @apply text-4xl font-semibold text-zinc-950 dark:text-zinc-100;
-}
+  .page-title {
+    @apply text-4xl font-semibold text-zinc-950 dark:text-zinc-100;
+  }
 
-@utility page-lede {
-  @apply mt-4 max-w-2xl text-zinc-600 dark:text-zinc-400;
-}
+  .page-lede {
+    @apply mt-4 max-w-2xl text-zinc-600 dark:text-zinc-400;
+  }
 
-@utility page-lede-lg {
-  @apply mt-5 text-lg leading-8 text-zinc-600 dark:text-zinc-400;
-}
+  .page-lede-lg {
+    @apply mt-5 text-lg leading-8 text-zinc-600 dark:text-zinc-400;
+  }
 
-@utility content-panel {
-  @apply bg-white px-6 py-8 dark:bg-zinc-900;
-}
+  .content-panel {
+    @apply bg-white px-6 py-8 dark:bg-zinc-900;
+  }
 
-@utility article-panel {
-  @apply bg-white px-6 py-10 dark:bg-zinc-900;
-}
+  .article-panel {
+    @apply bg-white px-6 py-10 dark:bg-zinc-900;
+  }
 
-@utility list-panel {
-  @apply bg-white px-6 dark:bg-zinc-900;
-}
+  .list-panel {
+    @apply bg-white px-6 dark:bg-zinc-900;
+  }
 
-@utility empty-state {
-  @apply border border-dashed border-zinc-300 bg-white p-6 text-zinc-600 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-400;
-}
+  .empty-state {
+    @apply border border-dashed border-zinc-300 bg-white p-6 text-zinc-600 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-400;
+  }
 
-@utility action-row {
-  @apply flex flex-wrap gap-3 text-sm font-medium;
-}
+  .action-row {
+    @apply flex flex-wrap gap-3 text-sm font-medium;
+  }
 
-@utility action-link {
-  @apply rounded px-4 py-2 text-sm font-medium;
-}
+  .action-link {
+    @apply rounded px-4 py-2 text-sm font-medium;
+  }
 
-@utility action-link-compact {
-  @apply rounded px-3 py-2;
-}
+  .action-link-compact {
+    @apply rounded px-3 py-2;
+  }
 
-@utility action-primary {
-  @apply bg-zinc-950 text-white hover:bg-zinc-700 dark:bg-zinc-100 dark:text-zinc-950 dark:hover:bg-white;
-}
+  .action-primary {
+    @apply bg-zinc-950 text-white hover:bg-zinc-700 dark:bg-zinc-100 dark:text-zinc-950 dark:hover:bg-white;
+  }
 
-@utility action-secondary {
-  @apply border border-zinc-300 text-zinc-700 hover:border-zinc-500 hover:text-zinc-950 dark:border-zinc-700 dark:text-zinc-300 dark:hover:border-zinc-100 dark:hover:text-zinc-100;
-}
+  .action-secondary {
+    @apply border border-zinc-300 text-zinc-700 hover:border-zinc-500 hover:text-zinc-950 dark:border-zinc-700 dark:text-zinc-300 dark:hover:border-zinc-100 dark:hover:text-zinc-100;
+  }
 
-@utility pagination-link {
-  @apply border border-zinc-300 px-4 py-2 font-medium text-zinc-700 hover:border-zinc-500 hover:text-zinc-950 dark:border-zinc-700 dark:text-zinc-300 dark:hover:border-zinc-100 dark:hover:text-zinc-100;
-}
+  .pagination-link {
+    @apply border border-zinc-300 px-4 py-2 font-medium text-zinc-700 hover:border-zinc-500 hover:text-zinc-950 dark:border-zinc-700 dark:text-zinc-300 dark:hover:border-zinc-100 dark:hover:text-zinc-100;
+  }
 
-@utility text-link {
-  @apply hover:text-zinc-950 dark:hover:text-zinc-100;
-}
+  .text-link {
+    @apply hover:text-zinc-950 dark:hover:text-zinc-100;
+  }
 
-@utility form-label {
-  @apply block text-sm font-medium text-zinc-800 dark:text-zinc-200;
-}
+  .form-label {
+    @apply block text-sm font-medium text-zinc-800 dark:text-zinc-200;
+  }
 
-@utility form-field {
-  @apply border border-zinc-300 bg-white px-3 py-2 text-zinc-950 outline-none focus:border-zinc-950 dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100 dark:focus:border-zinc-100;
-}
+  .form-field {
+    @apply border border-zinc-300 bg-white px-3 py-2 text-zinc-950 outline-none focus:border-zinc-950 dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100 dark:focus:border-zinc-100;
+  }
 
-@utility media-frame {
-  @apply relative aspect-[16/9] overflow-hidden bg-zinc-100 dark:bg-zinc-800;
-}
+  .media-frame {
+    @apply relative aspect-[16/9] overflow-hidden bg-zinc-100 dark:bg-zinc-800;
+  }
 
-@utility card-item {
-  @apply border-b border-zinc-200 py-8 dark:border-zinc-800;
-}
+  .card-item {
+    @apply border-b border-zinc-200 py-8 dark:border-zinc-800;
+  }
 
-@utility card-title {
-  @apply text-2xl font-semibold text-zinc-950 dark:text-zinc-100;
-}
+  .card-title {
+    @apply text-2xl font-semibold text-zinc-950 dark:text-zinc-100;
+  }
 
-@utility title-link {
-  @apply hover:text-zinc-700 dark:hover:text-zinc-300;
-}
+  .title-link {
+    @apply hover:text-zinc-700 dark:hover:text-zinc-300;
+  }
 
-@utility body-copy {
-  @apply text-zinc-700 dark:text-zinc-300;
-}
+  .body-copy {
+    @apply text-zinc-700 dark:text-zinc-300;
+  }
 
-@utility muted-copy {
-  @apply text-zinc-600 dark:text-zinc-400;
-}
+  .muted-copy {
+    @apply text-zinc-600 dark:text-zinc-400;
+  }
 
-@utility meta-copy {
-  @apply text-sm text-zinc-500 dark:text-zinc-400;
-}
+  .meta-copy {
+    @apply text-sm text-zinc-500 dark:text-zinc-400;
+  }
 
-@utility tag-row {
-  @apply flex flex-wrap gap-2;
-}
+  .tag-row {
+    @apply flex flex-wrap gap-2;
+  }
 
-@utility tag-pill {
-  @apply rounded border border-zinc-200 px-2 py-1 text-xs text-zinc-600 dark:border-zinc-700 dark:text-zinc-300;
+  .tag-pill {
+    @apply rounded border border-zinc-200 px-2 py-1 text-xs text-zinc-600 dark:border-zinc-700 dark:text-zinc-300;
+  }
 }

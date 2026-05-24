@@ -24,6 +24,7 @@ export function CommentForm({
 }: CommentFormProps) {
   const formId = useId();
   const formRef = useRef<HTMLFormElement>(null);
+  const startedAtRef = useRef(new Date().toISOString());
   const [formState, setFormState] = useState<FormState>();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -40,6 +41,7 @@ export function CommentForm({
         body: formData.get("body"),
         parentCommentId,
         postSlug,
+        startedAt: startedAtRef.current,
         website: formData.get("website"),
       }),
       headers: {

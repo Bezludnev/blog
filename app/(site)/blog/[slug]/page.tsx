@@ -8,6 +8,7 @@ import { RichText } from "@/components/rich-text";
 import { SiteHeader } from "@/components/site-header";
 import { getMediaUrl } from "@/lib/media";
 import { getPublishedPostBySlug } from "@/lib/posts";
+import { canonicalUrl } from "@/lib/seo";
 import type { Post, Tag } from "@/payload-types";
 
 type Args = {
@@ -26,6 +27,14 @@ function formatDate(value?: null | string) {
   }).format(new Date(value));
 }
 
+function formatReadingTime(value?: null | number) {
+  if (!value || !Number.isFinite(value) || value < 1) {
+    return null;
+  }
+
+  return `${Math.ceil(value)} min read`;
+}
+
 function getTags(post: Post) {
   return (post.tags || []).filter((tag): tag is Tag => {
     return typeof tag === "object" && tag !== null;
@@ -36,14 +45,19 @@ export async function generateMetadata({ params }: Args): Promise<Metadata> {
   const { slug } = await params;
   const post = await getPublishedPostBySlug(slug);
   const coverUrl = getMediaUrl(post.coverImage);
+  const url = canonicalUrl(`/blog/${post.slug}`);
 
   return {
     title: post.seoTitle || post.title,
     description: post.seoDescription || post.excerpt,
+    alternates: {
+      canonical: url,
+    },
     openGraph: {
       title: post.seoTitle || post.title,
       description: post.seoDescription || post.excerpt,
       images: coverUrl ? [{ url: coverUrl }] : undefined,
+      url,
     },
   };
 }
@@ -52,6 +66,8 @@ export default async function BlogPostPage({ params }: Args) {
   const { slug } = await params;
   const post = await getPublishedPostBySlug(slug);
   const tags = getTags(post);
+  const date = formatDate(post.publishedAt);
+  const readingTime = formatReadingTime(post.readingTime);
 
   return (
     <div className="site-page">
@@ -59,7 +75,9 @@ export default async function BlogPostPage({ params }: Args) {
       <PostViewTracker postSlug={post.slug} />
       <main className="site-main-narrow">
         <article className="article-panel">
-          <p className="meta-copy">{formatDate(post.publishedAt)}</p>
+          <p className="meta-copy">
+            {readingTime ? `${date} / ${readingTime}` : date}
+          </p>
           <h1 className="page-title mt-3">
             {post.title}
           </h1>

@@ -9,6 +9,7 @@ import {
   isCommentRateLimitExceeded,
 } from "@/lib/comment-rate-limit";
 import { getRelationshipId } from "@/lib/comment-replies";
+import { validateCommentSubmissionTiming } from "@/lib/comment-submission-timing";
 import { validateCommentInput } from "@/lib/comment-validation";
 import { getPayloadClient } from "@/lib/payload";
 
@@ -94,6 +95,14 @@ export async function POST(request: Request) {
 
   if (input.value.website) {
     return NextResponse.json({ message: "Comment submitted for moderation." });
+  }
+
+  const timing = validateCommentSubmissionTiming({
+    startedAt: input.value.startedAt,
+  });
+
+  if (!timing.ok) {
+    return NextResponse.json({ message: timing.message });
   }
 
   try {

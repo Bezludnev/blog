@@ -6,6 +6,7 @@ import { Pagination } from "@/components/pagination";
 import { SiteHeader } from "@/components/site-header";
 import { getPublishedCuratedLinksPage } from "@/lib/curated-links";
 import { isPageOutOfRange, normalizePageParam } from "@/lib/pagination";
+import { canonicalUrl } from "@/lib/seo";
 
 type Args = {
   searchParams: Promise<{
@@ -16,6 +17,14 @@ type Args = {
 export const metadata: Metadata = {
   title: "Feed | Personal Engineering Blog",
   description: "Articles, videos, tools, and repositories worth saving.",
+  alternates: {
+    canonical: canonicalUrl("/feed"),
+  },
+  openGraph: {
+    title: "Feed | Personal Engineering Blog",
+    description: "Articles, videos, tools, and repositories worth saving.",
+    url: canonicalUrl("/feed"),
+  },
 };
 
 export const revalidate = 3600;

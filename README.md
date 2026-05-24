@@ -175,10 +175,12 @@ Curated feed and home path:
 About and contact CMS path:
 
 1. Open `/admin` and update Site Settings with headline, bio, contact email,
-   and social links.
+   social links, navigation, and profile sections.
 2. Open `/about` and verify the headline, bio, and social links render.
-3. Open `/contact` and verify the `mailto:` link and social links render.
-4. Open `/sitemap.xml` and verify `/about` and `/contact` are present.
+3. Confirm configured profile sections render under the About bio.
+4. Confirm configured navigation links render in the public header.
+5. Open `/contact` and verify the `mailto:` link and social links render.
+6. Open `/sitemap.xml` and verify `/about` and `/contact` are present.
 
 Revalidation path:
 
@@ -211,6 +213,8 @@ Comment moderation path:
 13. Submit a second comment for the same post from the same browser and verify
    the API returns `429`.
 14. Confirm only the first accepted comment appears in `/admin`.
+15. Change an approved comment to `deleted` and verify `deletedAt` is set.
+16. Restore that comment away from `deleted` and verify `deletedAt` clears.
 
 Manual media path with Blob credentials:
 
@@ -223,4 +227,31 @@ Manual media path with Blob credentials:
 ## Deployment
 
 The target stack is Vercel Hobby plus MongoDB Atlas Free Tier. Configure the
-same environment variables in Vercel before deploying.
+same environment variables in Vercel before deploying. Use
+[`docs/deployment-checklist.md`](docs/deployment-checklist.md) for launch
+acceptance evidence.
+
+## Backups
+
+Manual MongoDB exports use `mongodump` and write to `backups/<timestamp>/` by
+default. The backup output directory is ignored by git.
+
+Local dry-run:
+
+```bash
+DATABASE_URI=mongodb://127.0.0.1:27017/blog scripts/backup-mongo.sh --dry-run
+```
+
+Local export:
+
+```bash
+DATABASE_URI=mongodb://127.0.0.1:27017/blog make backup-mongo
+```
+
+Atlas export:
+
+```bash
+DATABASE_URI="mongodb+srv://<user>:<password>@<cluster>/<database>" \
+  BACKUP_DIR=backups/atlas-$(date -u +"%Y%m%dT%H%M%SZ") \
+  make backup-mongo
+```

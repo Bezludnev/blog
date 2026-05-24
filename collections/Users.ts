@@ -21,6 +21,11 @@ export const Users: CollectionConfig = {
       required: true,
     },
     {
+      name: "avatar",
+      type: "upload",
+      relationTo: "media",
+    },
+    {
       name: "role",
       type: "select",
       required: true,
