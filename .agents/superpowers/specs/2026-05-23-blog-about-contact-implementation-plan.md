@@ -12,7 +12,7 @@
 
 ## Source Documents
 
-- Product PRD: `docs/_MConverter.eu_PRD_lichnyj_sajt_blog_free_first_NextJS_PayloadCMS_MongoDB.md`
+- Product PRD: `docs/_personal_blog_PRD_lichnyj_sajt_blog_free_first_NextJS_PayloadCMS_MongoDB.md`
 - Design: `docs/superpowers/specs/2026-05-23-blog-about-contact-design.md`
 - Foundation design: `docs/superpowers/specs/2026-05-22-blog-foundation-design.md`
 
@@ -58,7 +58,7 @@ Modify:
 
 - [ ] **Step 2: Add fallback helpers**
   Export:
-  - `getSiteName(settings)` -> settings name or `"MConverter.eu"`
+  - `getSiteName(settings)` -> settings name or `"Personal Engineering Blog"`
   - `getSiteHeadline(settings)` -> settings headline or `"Personal engineering blog"`
   - `getSiteBio(settings)` -> settings bio or a concise static fallback paragraph
 
@@ -103,7 +103,7 @@ Modify:
 
 - [ ] **Step 1: Add metadata**
   Use static metadata:
-  - title: `About | MConverter.eu`
+  - title: `About | Personal Engineering Blog`
   - description: `Profile, experience, and engineering focus.`
 
 - [ ] **Step 2: Fetch SiteSettings**
@@ -126,8 +126,8 @@ Modify:
 
 - [ ] **Step 1: Add metadata**
   Use static metadata:
-  - title: `Contact | MConverter.eu`
-  - description: `Ways to contact MConverter.eu.`
+  - title: `Contact | Personal Engineering Blog`
+  - description: `Ways to contact the author.`
 
 - [ ] **Step 2: Fetch SiteSettings**
   Use `getSiteSettings()`.

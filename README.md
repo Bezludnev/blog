@@ -1,4 +1,4 @@
-# MConverter.eu Blog
+# Personal Engineering Blog
 
 Personal blog foundation built with Next.js App Router, PayloadCMS, and MongoDB.
 
@@ -48,6 +48,11 @@ The first admin user is created through Payload's initial auth flow at
 - `ANALYTICS_ENABLED`: non-secret flag for Vercel Web Analytics and Speed
   Insights. Keep `false` locally. Set to `true` in Vercel preview/production
   after enabling Web Analytics and Speed Insights for the project.
+- `COMMENT_RATE_LIMIT_WINDOW_SECONDS`: non-secret comment rate-limit window
+  in seconds. Defaults to `300` when missing or invalid.
+- `COMMENT_RATE_LIMIT_MAX`: non-secret maximum accepted comments per post and
+  request identity within the rate-limit window. Defaults to `5` when missing
+  or invalid.
 
 For production, point `DATABASE_URI` to MongoDB Atlas Free Tier.
 
@@ -133,6 +138,10 @@ Comment moderation path:
 3. Confirm the comment appears in `/admin` with `status=pending`.
 4. Confirm the pending comment is not visible publicly.
 5. Change the comment to `approved` and verify it appears under the post.
+6. Temporarily set `COMMENT_RATE_LIMIT_MAX=1`.
+7. Submit a second comment for the same post from the same browser and verify
+   the API returns `429`.
+8. Confirm only the first accepted comment appears in `/admin`.
 
 Manual media path with Blob credentials:
 

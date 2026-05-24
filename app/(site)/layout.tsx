@@ -3,7 +3,7 @@ import { VercelInsights } from "@/components/vercel-insights";
 import "../globals.css";
 
 export const metadata: Metadata = {
-  title: "MConverter.eu",
+  title: "Personal Engineering Blog",
   description: "Personal engineering blog and portfolio.",
 };
 

@@ -22,7 +22,7 @@ export async function generateMetadata({ params }: Args): Promise<Metadata> {
   }
 
   return {
-    title: `${tag.name} | MConverter.eu`,
+    title: `${tag.name} | Personal Engineering Blog`,
     description: tag.description || `Published posts tagged ${tag.name}.`,
   };
 }

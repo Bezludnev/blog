@@ -12,7 +12,7 @@
 
 ## Source Documents
 
-- Product PRD: `docs/_MConverter.eu_PRD_lichnyj_sajt_blog_free_first_NextJS_PayloadCMS_MongoDB.md`
+- Product PRD: `docs/_personal_blog_PRD_lichnyj_sajt_blog_free_first_NextJS_PayloadCMS_MongoDB.md`
 - Foundation design: `docs/superpowers/specs/2026-05-22-blog-foundation-design.md`
 - Media design: `docs/superpowers/specs/2026-05-23-blog-media-storage-design.md`
 - Projects design: `docs/superpowers/specs/2026-05-23-blog-projects-design.md`
@@ -407,8 +407,8 @@ Modify:
   import { getPublishedProjects } from "@/lib/projects";
 
   export const metadata: Metadata = {
-    title: "Projects | MConverter.eu",
-    description: "Selected engineering projects from MConverter.eu.",
+    title: "Projects | Personal Engineering Blog",
+    description: "Selected engineering projects from the author.",
   };
 
   export const dynamic = "force-dynamic";
@@ -767,4 +767,3 @@ Modify:
 - `pnpm generate:types` passes.
 - `pnpm lint` passes.
 - `pnpm build` passes.
-

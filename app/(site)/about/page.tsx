@@ -10,7 +10,7 @@ import {
 } from "@/lib/site-settings";
 
 export const metadata: Metadata = {
-  title: "About | MConverter.eu",
+  title: "About | Personal Engineering Blog",
   description: "Profile, experience, and engineering focus.",
 };
 

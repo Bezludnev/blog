@@ -13,7 +13,7 @@ export const SiteSettings: GlobalConfig = {
       name: "name",
       type: "text",
       required: true,
-      defaultValue: "MConverter.eu",
+      defaultValue: "Personal Engineering Blog",
     },
     {
       name: "headline",

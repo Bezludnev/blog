@@ -6,8 +6,8 @@ import { SocialLinks } from "@/components/social-links";
 import { getSiteSettings } from "@/lib/site-settings";
 
 export const metadata: Metadata = {
-  title: "Contact | MConverter.eu",
-  description: "Ways to contact MConverter.eu.",
+  title: "Contact | Personal Engineering Blog",
+  description: "Ways to contact the author.",
 };
 
 export const dynamic = "force-dynamic";

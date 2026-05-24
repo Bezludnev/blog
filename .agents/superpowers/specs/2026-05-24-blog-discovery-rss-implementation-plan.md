@@ -12,7 +12,7 @@
 
 ## Source Documents
 
-- Product PRD: `docs/_MConverter.eu_PRD_lichnyj_sajt_blog_free_first_NextJS_PayloadCMS_MongoDB.md`
+- Product PRD: `docs/_personal_blog_PRD_lichnyj_sajt_blog_free_first_NextJS_PayloadCMS_MongoDB.md`
 - Design: `docs/superpowers/specs/2026-05-24-blog-discovery-rss-design.md`
 - Foundation design: `docs/superpowers/specs/2026-05-22-blog-foundation-design.md`
 
@@ -190,7 +190,7 @@ Modify:
   describe("buildRssFeed", () => {
     it("renders escaped feed and item XML", () => {
       const xml = buildRssFeed({
-        title: "MConverter.eu & Blog",
+        title: "Personal Engineering Blog & Notes",
         description: "Published notes",
         siteUrl: "https://example.com",
         feedUrl: "https://example.com/rss.xml",
@@ -206,7 +206,7 @@ Modify:
       });
 
       assert.match(xml, /<rss version="2.0" xmlns:atom="http:\/\/www.w3.org\/2005\/Atom">/);
-      assert.match(xml, /MConverter\.eu &amp; Blog/);
+      assert.match(xml, /Personal Engineering Blog &amp; Notes/);
       assert.match(xml, /<language>en<\/language>/);
       assert.match(xml, /Payload &amp; Next/);
       assert.match(xml, /CMS &lt;notes&gt;/);
@@ -332,7 +332,7 @@ Modify:
   Implement `dynamic = "force-dynamic"`, `generateMetadata`, and the default page. Use `getTagBySlug`, `getPublishedPostsByTagId`, `notFound()`, `SiteHeader`, and `PostCard`.
 
 - [ ] **Step 3: Add metadata fallback**
-  Title: `${tag.name} | MConverter.eu`.
+  Title: `${tag.name} | Personal Engineering Blog`.
   Description: tag description or `Published posts tagged ${tag.name}.`
 
 - [ ] **Step 4: Run feedback**

@@ -12,7 +12,7 @@
 
 ## Source Documents
 
-- Product PRD: `docs/_MConverter.eu_PRD_lichnyj_sajt_blog_free_first_NextJS_PayloadCMS_MongoDB.md`
+- Product PRD: `docs/_personal_blog_PRD_lichnyj_sajt_blog_free_first_NextJS_PayloadCMS_MongoDB.md`
 - Design spec: `docs/superpowers/specs/2026-05-22-blog-foundation-design.md`
 
 ## Implementation Rules
@@ -422,7 +422,7 @@ Modify:
         name: "name",
         type: "text",
         required: true,
-        defaultValue: "MConverter.eu",
+        defaultValue: "Personal Engineering Blog",
       },
       {
         name: "headline",
@@ -699,7 +699,7 @@ Modify:
       <header className="border-b border-zinc-200 bg-white">
         <nav className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
           <Link className="font-semibold text-zinc-950" href="/">
-            MConverter.eu
+            Personal Engineering Blog
           </Link>
           <div className="flex items-center gap-4 text-sm text-zinc-600">
             <Link className="hover:text-zinc-950" href="/blog">
