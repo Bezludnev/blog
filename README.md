@@ -39,6 +39,9 @@ The first admin user is created through Payload's initial auth flow at
   `mongodb://127.0.0.1:27017/blog` when running Next.js on the host, or
   `mongodb://mongo:27017/blog` when running Next.js inside Docker Compose.
 - `PAYLOAD_SECRET`: long random Payload secret. Never commit a real value.
+- `REVALIDATION_SECRET`: long random secret for protected manual
+  revalidation. Configure it in Vercel preview/production if using
+  `/api/revalidate`.
 - `NEXT_PUBLIC_SITE_URL`: public base URL used by metadata, robots, and
   sitemap. Use the Vercel URL until a custom domain exists.
 - `BLOB_READ_WRITE_TOKEN`: Vercel Blob read/write token for media uploads.
@@ -130,6 +133,17 @@ About and contact CMS path:
 2. Open `/about` and verify the headline, bio, and social links render.
 3. Open `/contact` and verify the `mailto:` link and social links render.
 4. Open `/sitemap.xml` and verify `/about` and `/contact` are present.
+
+Revalidation path:
+
+1. Set `REVALIDATION_SECRET` locally and start MongoDB plus `pnpm dev`.
+2. Edit or publish a post in `/admin`.
+3. Verify `/blog`, `/blog/<slug>`, `/rss.xml`, and `/sitemap.xml` update
+   after the next request.
+4. Approve a pending comment and verify `/blog/<slug>` updates.
+5. POST to `/api/revalidate` with an invalid secret and confirm `401`.
+6. POST to `/api/revalidate` with `{ "secret": "...", "target": "posts" }`
+   and confirm the response contains known paths.
 
 Comment moderation path:
 

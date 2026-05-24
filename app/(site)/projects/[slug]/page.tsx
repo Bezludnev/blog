@@ -13,7 +13,7 @@ type Args = {
   }>;
 };
 
-export const dynamic = "force-dynamic";
+export const revalidate = 3600;
 
 function getStack(project: Awaited<ReturnType<typeof getPublishedProjectBySlug>>) {
   return (project.stack || [])

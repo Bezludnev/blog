@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   description: "Selected engineering projects from the author.",
 };
 
-export const dynamic = "force-dynamic";
+export const revalidate = 3600;
 
 export default async function ProjectsPage() {
   const projects = await getPublishedProjects();

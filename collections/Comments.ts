@@ -4,6 +4,10 @@ import {
   MAX_COMMENT_BODY_LENGTH,
   MAX_COMMENT_NAME_LENGTH,
 } from "../lib/comment-validation.ts";
+import {
+  revalidateCommentAfterChange,
+  revalidateCommentAfterDelete,
+} from "../lib/payload-revalidation.ts";
 import { isAdmin } from "./access.ts";
 
 export const Comments: CollectionConfig = {
@@ -17,6 +21,10 @@ export const Comments: CollectionConfig = {
     read: isAdmin,
     update: isAdmin,
     delete: isAdmin,
+  },
+  hooks: {
+    afterChange: [revalidateCommentAfterChange],
+    afterDelete: [revalidateCommentAfterDelete],
   },
   fields: [
     {

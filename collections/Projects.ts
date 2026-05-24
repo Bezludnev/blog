@@ -1,5 +1,9 @@
 import type { CollectionConfig } from "payload";
 
+import {
+  revalidateProjectAfterChange,
+  revalidateProjectAfterDelete,
+} from "../lib/payload-revalidation.ts";
 import { isAdmin, publishedOrAdmin } from "./access.ts";
 
 export const Projects: CollectionConfig = {
@@ -14,6 +18,10 @@ export const Projects: CollectionConfig = {
     read: publishedOrAdmin,
     update: isAdmin,
     delete: isAdmin,
+  },
+  hooks: {
+    afterChange: [revalidateProjectAfterChange],
+    afterDelete: [revalidateProjectAfterDelete],
   },
   fields: [
     {

@@ -2,7 +2,7 @@ import { getRecentPublishedPostsForFeed } from "@/lib/posts";
 import { buildRssFeed } from "@/lib/rss";
 import { absoluteUrl } from "@/lib/seo";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 3600;
 
 export async function GET() {
   const posts = await getRecentPublishedPostsForFeed(20);
