@@ -12,7 +12,7 @@
 
 ## Source Documents
 
-- Product PRD: `docs/_MConverter.eu_PRD_lichnyj_sajt_blog_free_first_NextJS_PayloadCMS_MongoDB.md`
+- Product PRD: `docs/_personal_blog_PRD_lichnyj_sajt_blog_free_first_NextJS_PayloadCMS_MongoDB.md`
 - Design: `docs/superpowers/specs/2026-05-24-blog-vercel-analytics-design.md`
 - Vercel docs checked through Context7:
   - Web Analytics App Router component: `Analytics` from `@vercel/analytics/next`

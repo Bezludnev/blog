@@ -15,7 +15,7 @@ describe("escapeXml", () => {
 describe("buildRssFeed", () => {
   it("renders escaped feed and item XML", () => {
     const xml = buildRssFeed({
-      title: "MConverter.eu & Blog",
+      title: "Personal Engineering Blog & Notes",
       description: "Published notes",
       siteUrl: "https://example.com",
       feedUrl: "https://example.com/rss.xml",
@@ -34,7 +34,7 @@ describe("buildRssFeed", () => {
       xml,
       /<rss version="2.0" xmlns:atom="http:\/\/www.w3.org\/2005\/Atom">/,
     );
-    assert.match(xml, /MConverter\.eu &amp; Blog/);
+    assert.match(xml, /Personal Engineering Blog &amp; Notes/);
     assert.match(xml, /<language>en<\/language>/);
     assert.match(xml, /Payload &amp; Next/);
     assert.match(xml, /CMS &lt;notes&gt;/);

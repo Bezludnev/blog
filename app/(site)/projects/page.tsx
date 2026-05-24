@@ -5,8 +5,8 @@ import { SiteHeader } from "@/components/site-header";
 import { getPublishedProjects } from "@/lib/projects";
 
 export const metadata: Metadata = {
-  title: "Projects | MConverter.eu",
-  description: "Selected engineering projects from MConverter.eu.",
+  title: "Projects | Personal Engineering Blog",
+  description: "Selected engineering projects from the author.",
 };
 
 export const dynamic = "force-dynamic";

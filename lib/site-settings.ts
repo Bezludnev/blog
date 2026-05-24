@@ -1,6 +1,6 @@
 import type { SiteSetting } from "../payload-types";
 
-const fallbackSiteName = "MConverter.eu";
+const fallbackSiteName = "Personal Engineering Blog";
 const fallbackHeadline = "Personal engineering blog";
 const fallbackBio =
   "Personal engineering notes on software delivery, systems, and product engineering.";

@@ -5,7 +5,7 @@ export function SiteHeader() {
     <header className="border-b border-zinc-200 bg-white">
       <nav className="mx-auto flex max-w-5xl items-center justify-between gap-4 px-6 py-4">
         <Link className="font-semibold text-zinc-950" href="/">
-          MConverter.eu
+          Personal Engineering Blog
         </Link>
         <div className="flex flex-wrap items-center justify-end gap-x-4 gap-y-2 text-sm text-zinc-600">
           <Link className="hover:text-zinc-950" href="/about">

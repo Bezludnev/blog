@@ -7,8 +7,8 @@ export const dynamic = "force-dynamic";
 export async function GET() {
   const posts = await getRecentPublishedPostsForFeed(20);
   const xml = buildRssFeed({
-    title: "MConverter.eu Blog",
-    description: "Published notes from MConverter.eu.",
+    title: "Personal Engineering Blog",
+    description: "Published notes from this personal engineering blog.",
     siteUrl: absoluteUrl("/"),
     feedUrl: absoluteUrl("/rss.xml"),
     items: posts.map((post) => {

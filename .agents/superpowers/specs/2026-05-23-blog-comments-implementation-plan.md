@@ -12,7 +12,7 @@
 
 ## Source Documents
 
-- Product PRD: `docs/_MConverter.eu_PRD_lichnyj_sajt_blog_free_first_NextJS_PayloadCMS_MongoDB.md`
+- Product PRD: `docs/_personal_blog_PRD_lichnyj_sajt_blog_free_first_NextJS_PayloadCMS_MongoDB.md`
 - Comments design: `docs/superpowers/specs/2026-05-23-blog-comments-design.md`
 - Foundation design: `docs/superpowers/specs/2026-05-22-blog-foundation-design.md`
 

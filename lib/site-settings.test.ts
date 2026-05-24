@@ -27,7 +27,7 @@ describe("site settings fallbacks", () => {
       name: "",
     };
 
-    assert.equal(getSiteName(settings), "MConverter.eu");
+    assert.equal(getSiteName(settings), "Personal Engineering Blog");
     assert.equal(getSiteHeadline(settings), "Personal engineering blog");
     assert.match(getSiteBio(settings), /software delivery/i);
   });

@@ -13,8 +13,8 @@ type Args = {
 };
 
 export const metadata: Metadata = {
-  title: "Blog | MConverter.eu",
-  description: "Published notes from MConverter.eu.",
+  title: "Blog | Personal Engineering Blog",
+  description: "Published notes from this personal engineering blog.",
   alternates: {
     types: {
       "application/rss+xml": "/rss.xml",

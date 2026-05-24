@@ -12,7 +12,7 @@
 
 ## Source Documents
 
-- Product PRD: `docs/_MConverter.eu_PRD_lichnyj_sajt_blog_free_first_NextJS_PayloadCMS_MongoDB.md`
+- Product PRD: `docs/_personal_blog_PRD_lichnyj_sajt_blog_free_first_NextJS_PayloadCMS_MongoDB.md`
 - Foundation design: `docs/superpowers/specs/2026-05-22-blog-foundation-design.md`
 - Media design: `docs/superpowers/specs/2026-05-23-blog-media-storage-design.md`
 
@@ -554,4 +554,3 @@ Modify:
 - Post metadata includes cover Open Graph image when present.
 - README documents Blob setup.
 - `pnpm generate:importmap`, `pnpm generate:types`, `pnpm lint`, and `pnpm build` pass.
-
