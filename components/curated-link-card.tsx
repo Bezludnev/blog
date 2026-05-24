@@ -45,7 +45,7 @@ export function CuratedLinkCard({ item }: { item: CuratedLink }) {
         {item.summary}
       </p>
       {item.note ? (
-        <p className="body-copy mt-3 max-w-2xl border-l border-zinc-300 pl-4 dark:border-zinc-700">
+        <p className="body-copy accent-note mt-3 max-w-2xl">
           {item.note}
         </p>
       ) : null}

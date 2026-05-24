@@ -37,7 +37,7 @@ export default async function ContactPage() {
         <div className="content-panel mt-8">
           {contactEmail ? (
             <a
-              className="text-lg font-medium text-zinc-950 underline decoration-zinc-300 underline-offset-4 hover:text-zinc-700 dark:text-zinc-100 dark:decoration-zinc-700 dark:hover:text-zinc-300"
+              className="text-link text-lg font-medium underline"
               href={`mailto:${contactEmail}`}
             >
               {contactEmail}

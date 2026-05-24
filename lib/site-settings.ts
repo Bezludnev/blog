@@ -10,7 +10,6 @@ const fallbackNavigation: SiteNavigationItem[] = [
   { label: "Feed", newTab: false, url: "/feed" },
   { label: "Blog", newTab: false, url: "/blog" },
   { label: "Contact", newTab: false, url: "/contact" },
-  { label: "Admin", newTab: false, url: "/admin" },
 ];
 
 type OpenGraphImage = Media | string;
@@ -65,6 +64,10 @@ function valueOrFallback(value: null | string | undefined, fallback: string) {
   return hasValue(value) ? value : fallback;
 }
 
+function isAdminNavigationUrl(url: string) {
+  return url === "/admin" || url.startsWith("/admin/");
+}
+
 export async function getSiteSettings() {
   const { getPayloadClient } = await import("./payload.ts");
   const payload = await getPayloadClient();
@@ -95,6 +98,10 @@ export function getSiteNavigation(
       const url = item.url?.trim();
 
       if (!label || !url) {
+        return null;
+      }
+
+      if (isAdminNavigationUrl(url)) {
         return null;
       }
 

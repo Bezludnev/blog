@@ -40,11 +40,11 @@ export function Pagination({
           Previous
         </Link>
       ) : (
-        <span aria-hidden="true" className="px-4 py-2 text-zinc-400 dark:text-zinc-600">
+        <span aria-hidden="true" className="pagination-disabled px-4 py-2">
           Previous
         </span>
       )}
-      <span className="text-zinc-600 dark:text-zinc-400">
+      <span className="pagination-muted">
         Page {page} of {totalPages}
       </span>
       {hasNextPage && nextPage ? (
@@ -55,7 +55,7 @@ export function Pagination({
           Next
         </Link>
       ) : (
-        <span aria-hidden="true" className="px-4 py-2 text-zinc-400 dark:text-zinc-600">
+        <span aria-hidden="true" className="pagination-disabled px-4 py-2">
           Next
         </span>
       )}

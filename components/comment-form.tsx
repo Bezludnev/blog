@@ -128,7 +128,7 @@ export function CommentForm({
       ) : null}
 
       <button
-        className="action-link action-primary border border-zinc-950 disabled:cursor-not-allowed disabled:opacity-60 dark:border-zinc-100"
+        className="action-link action-primary disabled:cursor-not-allowed disabled:opacity-60"
         disabled={isSubmitting}
         type="submit"
       >
@@ -149,7 +149,7 @@ export function ReplyForm({ parentCommentId, postSlug }: ReplyFormProps) {
   return (
     <div className="mt-4">
       <button
-        className="text-sm font-medium text-zinc-700 underline-offset-4 hover:underline dark:text-zinc-300"
+        className="text-link text-sm font-medium"
         onClick={() => setIsOpen((value) => !value)}
         type="button"
       >

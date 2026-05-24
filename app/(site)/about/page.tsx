@@ -49,7 +49,7 @@ export default async function AboutPage() {
             <div className="mt-8 space-y-6">
               {profileSections.map((section) => (
                 <section key={section.title}>
-                  <h2 className="text-lg font-semibold text-zinc-950 dark:text-zinc-100">
+                  <h2 className="profile-section-title">
                     {section.title}
                   </h2>
                   <p className="muted-copy mt-3 whitespace-pre-line leading-8">
