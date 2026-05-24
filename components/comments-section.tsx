@@ -22,9 +22,9 @@ function CommentBody({ comment }: { comment: Comment }) {
     <>
       <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
         <h3 className="font-medium text-zinc-950 dark:text-zinc-100">{comment.authorName}</h3>
-        <p className="text-sm text-zinc-500 dark:text-zinc-400">{formatDate(comment.createdAt)}</p>
+        <p className="meta-copy">{formatDate(comment.createdAt)}</p>
       </div>
-      <p className="mt-3 whitespace-pre-wrap text-zinc-700 dark:text-zinc-300">{comment.body}</p>
+      <p className="body-copy mt-3 whitespace-pre-wrap">{comment.body}</p>
     </>
   );
 }
@@ -38,7 +38,7 @@ export async function CommentsSection({
 
   return (
     <section className="mt-10 border-t border-zinc-200 pt-10 dark:border-zinc-800">
-      <h2 className="text-2xl font-semibold text-zinc-950 dark:text-zinc-100">Comments</h2>
+      <h2 className="card-title">Comments</h2>
       {threads.length > 0 ? (
         <div className="mt-6 space-y-6">
           {threads.map((thread) => (
