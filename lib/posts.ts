@@ -144,6 +144,19 @@ export async function getTagBySlug(slug: string) {
   return result.docs[0] as Tag | undefined;
 }
 
+export async function getPublicTags() {
+  const payload = await getPayloadClient();
+
+  const result = await payload.find({
+    collection: "tags",
+    depth: 0,
+    pagination: false,
+    sort: "name",
+  });
+
+  return result.docs as Tag[];
+}
+
 export async function getPublishedPostsByTagId(tagId: string) {
   const payload = await getPayloadClient();
 

@@ -6,6 +6,7 @@ import { RichText } from "@/components/rich-text";
 import { SiteHeader } from "@/components/site-header";
 import { getMediaUrl } from "@/lib/media";
 import { getPublishedProjectBySlug } from "@/lib/projects";
+import { canonicalUrl } from "@/lib/seo";
 
 type Args = {
   params: Promise<{
@@ -25,14 +26,19 @@ export async function generateMetadata({ params }: Args): Promise<Metadata> {
   const { slug } = await params;
   const project = await getPublishedProjectBySlug(slug);
   const coverUrl = getMediaUrl(project.coverImage);
+  const url = canonicalUrl(`/projects/${project.slug}`);
 
   return {
     title: project.seoTitle || project.title,
     description: project.seoDescription || project.summary,
+    alternates: {
+      canonical: url,
+    },
     openGraph: {
       title: project.seoTitle || project.title,
       description: project.seoDescription || project.summary,
       images: coverUrl ? [{ url: coverUrl }] : undefined,
+      url,
     },
   };
 }

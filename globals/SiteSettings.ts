@@ -50,6 +50,61 @@ export const SiteSettings: GlobalConfig = {
       ],
     },
     {
+      name: "navigation",
+      type: "array",
+      fields: [
+        {
+          name: "label",
+          type: "text",
+          required: true,
+        },
+        {
+          name: "url",
+          type: "text",
+          required: true,
+        },
+        {
+          name: "newTab",
+          type: "checkbox",
+        },
+      ],
+    },
+    {
+      name: "profileSections",
+      type: "array",
+      fields: [
+        {
+          name: "title",
+          type: "text",
+          required: true,
+        },
+        {
+          name: "body",
+          type: "textarea",
+          required: true,
+        },
+      ],
+    },
+    {
+      name: "seoDefaults",
+      type: "group",
+      fields: [
+        {
+          name: "title",
+          type: "text",
+        },
+        {
+          name: "description",
+          type: "textarea",
+        },
+        {
+          name: "openGraphImage",
+          type: "upload",
+          relationTo: "media",
+        },
+      ],
+    },
+    {
       name: "seoTitle",
       type: "text",
     },

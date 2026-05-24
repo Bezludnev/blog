@@ -6,6 +6,7 @@ type CommentInput = {
   body?: unknown;
   parentCommentId?: unknown;
   postSlug?: unknown;
+  startedAt?: unknown;
   website?: unknown;
 };
 
@@ -14,6 +15,7 @@ type ValidCommentInput = {
   body: string;
   parentCommentId?: string;
   postSlug: string;
+  startedAt?: string;
   website: string;
 };
 
@@ -31,6 +33,10 @@ function asString(value: unknown) {
   return typeof value === "string" ? value.trim() : "";
 }
 
+function containsHtmlLikeInput(value: string) {
+  return /<[^>]+>/.test(value);
+}
+
 export function validateCommentInput(
   input: CommentInput,
 ): CommentValidationResult {
@@ -38,6 +44,7 @@ export function validateCommentInput(
   const body = asString(input.body);
   const parentCommentId = asString(input.parentCommentId);
   const postSlug = asString(input.postSlug);
+  const startedAt = asString(input.startedAt);
   const website = asString(input.website);
 
   if (!postSlug) {
@@ -52,12 +59,20 @@ export function validateCommentInput(
     return { ok: false, message: "Name is too long." };
   }
 
+  if (containsHtmlLikeInput(authorName)) {
+    return { ok: false, message: "HTML is not allowed." };
+  }
+
   if (!body) {
     return { ok: false, message: "Comment is required." };
   }
 
   if (body.length > MAX_COMMENT_BODY_LENGTH) {
     return { ok: false, message: "Comment is too long." };
+  }
+
+  if (containsHtmlLikeInput(body)) {
+    return { ok: false, message: "HTML is not allowed." };
   }
 
   return {
@@ -67,6 +82,7 @@ export function validateCommentInput(
       body,
       ...(parentCommentId ? { parentCommentId } : {}),
       postSlug,
+      ...(startedAt ? { startedAt } : {}),
       website,
     },
   };

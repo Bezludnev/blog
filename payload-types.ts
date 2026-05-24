@@ -140,6 +140,7 @@ export interface UserAuthOperations {
 export interface User {
   id: string;
   displayName: string;
+  avatar?: (string | null) | Media;
   role: 'admin';
   updatedAt: string;
   createdAt: string;
@@ -341,6 +342,7 @@ export interface Comment {
   authorName: string;
   body: string;
   status: 'pending' | 'approved' | 'rejected' | 'deleted';
+  deletedAt?: string | null;
   ipHash?: string | null;
   userAgentHash?: string | null;
   updatedAt: string;
@@ -450,6 +452,7 @@ export interface PayloadMigration {
  */
 export interface UsersSelect<T extends boolean = true> {
   displayName?: T;
+  avatar?: T;
   role?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -620,6 +623,7 @@ export interface CommentsSelect<T extends boolean = true> {
   authorName?: T;
   body?: T;
   status?: T;
+  deletedAt?: T;
   ipHash?: T;
   userAgentHash?: T;
   updatedAt?: T;
@@ -682,6 +686,26 @@ export interface SiteSetting {
         id?: string | null;
       }[]
     | null;
+  navigation?:
+    | {
+        label: string;
+        url: string;
+        newTab?: boolean | null;
+        id?: string | null;
+      }[]
+    | null;
+  profileSections?:
+    | {
+        title: string;
+        body: string;
+        id?: string | null;
+      }[]
+    | null;
+  seoDefaults?: {
+    title?: string | null;
+    description?: string | null;
+    openGraphImage?: (string | null) | Media;
+  };
   seoTitle?: string | null;
   seoDescription?: string | null;
   updatedAt?: string | null;
@@ -702,6 +726,28 @@ export interface SiteSettingsSelect<T extends boolean = true> {
         label?: T;
         url?: T;
         id?: T;
+      };
+  navigation?:
+    | T
+    | {
+        label?: T;
+        url?: T;
+        newTab?: T;
+        id?: T;
+      };
+  profileSections?:
+    | T
+    | {
+        title?: T;
+        body?: T;
+        id?: T;
+      };
+  seoDefaults?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        openGraphImage?: T;
       };
   seoTitle?: T;
   seoDescription?: T;

@@ -1,12 +1,21 @@
 import type { Metadata } from "next";
 import Script from "next/script";
 import { VercelInsights } from "@/components/vercel-insights";
+import { canonicalUrl, getSiteUrl } from "@/lib/seo";
 import { getThemeBootstrapScript } from "@/lib/theme";
 import "../globals.css";
 
 export const metadata: Metadata = {
+  metadataBase: new URL(getSiteUrl()),
   title: "Personal Engineering Blog",
   description: "Personal engineering blog and portfolio.",
+  openGraph: {
+    title: "Personal Engineering Blog",
+    description: "Personal engineering blog and portfolio.",
+    siteName: "Personal Engineering Blog",
+    type: "website",
+    url: canonicalUrl("/"),
+  },
 };
 
 export default function SiteLayout({

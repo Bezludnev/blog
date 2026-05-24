@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 
 import { CuratedLinkCard } from "@/components/curated-link-card";
@@ -7,12 +8,26 @@ import { SiteHeader } from "@/components/site-header";
 import { getRecentPublishedCuratedLinks } from "@/lib/curated-links";
 import { getRecentPublishedPostsForFeed } from "@/lib/posts";
 import { getFeaturedProjects } from "@/lib/projects";
+import { canonicalUrl } from "@/lib/seo";
 import {
   getSiteBio,
   getSiteHeadline,
   getSiteName,
   getSiteSettings,
 } from "@/lib/site-settings";
+
+export const metadata: Metadata = {
+  title: "Personal Engineering Blog",
+  description: "Personal engineering blog and portfolio.",
+  alternates: {
+    canonical: canonicalUrl("/"),
+  },
+  openGraph: {
+    title: "Personal Engineering Blog",
+    description: "Personal engineering blog and portfolio.",
+    url: canonicalUrl("/"),
+  },
+};
 
 export const revalidate = 3600;
 

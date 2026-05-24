@@ -1,14 +1,17 @@
 import type { MetadataRoute } from "next";
 
 import { absoluteUrl } from "@/lib/seo";
-import { getPublishedPosts } from "@/lib/posts";
+import { getPublicTags, getPublishedPosts } from "@/lib/posts";
 import { getPublishedProjects } from "@/lib/projects";
 
 export const revalidate = 3600;
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const posts = await getPublishedPosts();
-  const projects = await getPublishedProjects();
+  const [posts, projects, tags] = await Promise.all([
+    getPublishedPosts(),
+    getPublishedProjects(),
+    getPublicTags(),
+  ]);
   const now = new Date();
 
   return [
@@ -43,6 +46,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...projects.map((project) => ({
       url: absoluteUrl(`/projects/${project.slug}`),
       lastModified: project.updatedAt ? new Date(project.updatedAt) : now,
+    })),
+    ...tags.map((tag) => ({
+      url: absoluteUrl(`/tags/${tag.slug}`),
+      lastModified: tag.updatedAt ? new Date(tag.updatedAt) : now,
     })),
   ];
 }

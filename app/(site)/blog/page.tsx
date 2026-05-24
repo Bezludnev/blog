@@ -8,6 +8,7 @@ import { SiteHeader } from "@/components/site-header";
 import { isPageOutOfRange, normalizePageParam } from "@/lib/pagination";
 import { getPublishedPostsPage } from "@/lib/posts";
 import { normalizeSearchQuery } from "@/lib/search";
+import { canonicalUrl } from "@/lib/seo";
 
 type Args = {
   searchParams: Promise<{
@@ -20,9 +21,15 @@ export const metadata: Metadata = {
   title: "Blog | Personal Engineering Blog",
   description: "Published notes from this personal engineering blog.",
   alternates: {
+    canonical: canonicalUrl("/blog"),
     types: {
       "application/rss+xml": "/rss.xml",
     },
+  },
+  openGraph: {
+    title: "Blog | Personal Engineering Blog",
+    description: "Published notes from this personal engineering blog.",
+    url: canonicalUrl("/blog"),
   },
 };
 

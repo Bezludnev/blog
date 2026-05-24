@@ -3,10 +3,19 @@ import type { Metadata } from "next";
 import { ProjectCard } from "@/components/project-card";
 import { SiteHeader } from "@/components/site-header";
 import { getPublishedProjects } from "@/lib/projects";
+import { canonicalUrl } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Projects | Personal Engineering Blog",
   description: "Selected engineering projects from the author.",
+  alternates: {
+    canonical: canonicalUrl("/projects"),
+  },
+  openGraph: {
+    title: "Projects | Personal Engineering Blog",
+    description: "Selected engineering projects from the author.",
+    url: canonicalUrl("/projects"),
+  },
 };
 
 export const revalidate = 3600;

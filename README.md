@@ -175,10 +175,12 @@ Curated feed and home path:
 About and contact CMS path:
 
 1. Open `/admin` and update Site Settings with headline, bio, contact email,
-   and social links.
+   social links, navigation, and profile sections.
 2. Open `/about` and verify the headline, bio, and social links render.
-3. Open `/contact` and verify the `mailto:` link and social links render.
-4. Open `/sitemap.xml` and verify `/about` and `/contact` are present.
+3. Confirm configured profile sections render under the About bio.
+4. Confirm configured navigation links render in the public header.
+5. Open `/contact` and verify the `mailto:` link and social links render.
+6. Open `/sitemap.xml` and verify `/about` and `/contact` are present.
 
 Revalidation path:
 
@@ -211,6 +213,8 @@ Comment moderation path:
 13. Submit a second comment for the same post from the same browser and verify
    the API returns `429`.
 14. Confirm only the first accepted comment appears in `/admin`.
+15. Change an approved comment to `deleted` and verify `deletedAt` is set.
+16. Restore that comment away from `deleted` and verify `deletedAt` clears.
 
 Manual media path with Blob credentials:
 

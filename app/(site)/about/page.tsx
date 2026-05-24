@@ -3,7 +3,9 @@ import Link from "next/link";
 
 import { SiteHeader } from "@/components/site-header";
 import { SocialLinks } from "@/components/social-links";
+import { canonicalUrl } from "@/lib/seo";
 import {
+  getProfileSections,
   getSiteBio,
   getSiteHeadline,
   getSiteSettings,
@@ -12,6 +14,14 @@ import {
 export const metadata: Metadata = {
   title: "About | Personal Engineering Blog",
   description: "Profile, experience, and engineering focus.",
+  alternates: {
+    canonical: canonicalUrl("/about"),
+  },
+  openGraph: {
+    title: "About | Personal Engineering Blog",
+    description: "Profile, experience, and engineering focus.",
+    url: canonicalUrl("/about"),
+  },
 };
 
 export const revalidate = 3600;
@@ -20,6 +30,7 @@ export default async function AboutPage() {
   const settings = await getSiteSettings();
   const headline = getSiteHeadline(settings);
   const bio = getSiteBio(settings);
+  const profileSections = getProfileSections(settings);
 
   return (
     <div className="site-page">
@@ -34,6 +45,20 @@ export default async function AboutPage() {
             {bio}
           </p>
           <SocialLinks links={settings.socialLinks} />
+          {profileSections.length > 0 ? (
+            <div className="mt-8 space-y-6">
+              {profileSections.map((section) => (
+                <section key={section.title}>
+                  <h2 className="text-lg font-semibold text-zinc-950 dark:text-zinc-100">
+                    {section.title}
+                  </h2>
+                  <p className="muted-copy mt-3 whitespace-pre-line leading-8">
+                    {section.body}
+                  </p>
+                </section>
+              ))}
+            </div>
+          ) : null}
         </div>
         <div className="action-row mt-10">
           <Link className="action-link action-primary" href="/projects">
