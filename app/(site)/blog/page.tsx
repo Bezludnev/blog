@@ -2,18 +2,14 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
-import { BlogSearch, type BlogSearchPost } from "@/components/blog-search";
+import { BlogSearch } from "@/components/blog-search";
 import { Pagination } from "@/components/pagination";
 import { PostCard } from "@/components/post-card";
 import { SiteHeader } from "@/components/site-header";
 import { isPageOutOfRange, normalizePageParam } from "@/lib/pagination";
-import {
-  getPublishedPostsPage,
-  getRecentPublishedPostsForSearch,
-} from "@/lib/posts";
+import { getPublishedPostsPage } from "@/lib/posts";
 import { normalizeSearchQuery } from "@/lib/search";
 import { canonicalUrl } from "@/lib/seo";
-import type { Tag } from "@/payload-types";
 
 type Args = {
   searchParams: Promise<{
@@ -44,25 +40,11 @@ export default async function BlogPage({ searchParams }: Args) {
   const { page: pageParam, q } = await searchParams;
   const query = normalizeSearchQuery(q);
   const page = normalizePageParam(pageParam);
-  const [postsPage, postsForSearch] = await Promise.all([
-    getPublishedPostsPage({ page, query }),
-    getRecentPublishedPostsForSearch(50),
-  ]);
+  const postsPage = await getPublishedPostsPage({ page, query });
 
   if (isPageOutOfRange(page, postsPage.totalPages, postsPage.totalDocs)) {
     notFound();
   }
-
-  const searchPosts: BlogSearchPost[] = postsForSearch.map((post) => ({
-    id: post.id,
-    slug: post.slug,
-    title: post.title,
-    excerpt: post.excerpt ?? null,
-    publishedAt: post.publishedAt ?? null,
-    tagNames: (post.tags || [])
-      .filter((tag): tag is Tag => typeof tag === "object" && tag !== null)
-      .map((tag) => tag.name),
-  }));
 
   return (
     <div className="site-page">
@@ -72,7 +54,7 @@ export default async function BlogPage({ searchParams }: Args) {
         <p className="page-lede">
           Published notes from the CMS.
         </p>
-        <BlogSearch initialQuery={query} posts={searchPosts} />
+        <BlogSearch initialQuery={query} />
         {query ? (
           <div className="search-summary">
             <p>
