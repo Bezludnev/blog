@@ -65,7 +65,22 @@ test("public CMS pages render and navigate from the shared header", async ({
 });
 
 test("public shell applies footer and page enter styles", async ({ page }) => {
-  await page.goto("/blog");
+  await page.goto("/");
+
+  await page
+    .getByRole("navigation")
+    .getByRole("link", { name: "Blog", exact: true })
+    .click();
+  await page.waitForURL(/\/blog$/);
+  await page.waitForFunction(() =>
+    document
+      .getAnimations()
+      .some(
+        (animation) =>
+          animation instanceof CSSAnimation &&
+          animation.animationName === "pageEnter",
+      ),
+  );
 
   const shellStyles = await page.evaluate(() => {
     const footer = document.querySelector(".site-footer");
