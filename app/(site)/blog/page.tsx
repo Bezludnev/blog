@@ -2,13 +2,18 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
+import { BlogSearch, type BlogSearchPost } from "@/components/blog-search";
 import { Pagination } from "@/components/pagination";
 import { PostCard } from "@/components/post-card";
 import { SiteHeader } from "@/components/site-header";
 import { isPageOutOfRange, normalizePageParam } from "@/lib/pagination";
-import { getPublishedPostsPage } from "@/lib/posts";
+import {
+  getPublishedPostsPage,
+  getRecentPublishedPostsForSearch,
+} from "@/lib/posts";
 import { normalizeSearchQuery } from "@/lib/search";
 import { canonicalUrl } from "@/lib/seo";
+import type { Tag } from "@/payload-types";
 
 type Args = {
   searchParams: Promise<{
@@ -39,35 +44,35 @@ export default async function BlogPage({ searchParams }: Args) {
   const { page: pageParam, q } = await searchParams;
   const query = normalizeSearchQuery(q);
   const page = normalizePageParam(pageParam);
-  const postsPage = await getPublishedPostsPage({ page, query });
+  const [postsPage, postsForSearch] = await Promise.all([
+    getPublishedPostsPage({ page, query }),
+    getRecentPublishedPostsForSearch(50),
+  ]);
 
   if (isPageOutOfRange(page, postsPage.totalPages, postsPage.totalDocs)) {
     notFound();
   }
 
+  const searchPosts: BlogSearchPost[] = postsForSearch.map((post) => ({
+    id: post.id,
+    slug: post.slug,
+    title: post.title,
+    excerpt: post.excerpt ?? null,
+    publishedAt: post.publishedAt ?? null,
+    tagNames: (post.tags || [])
+      .filter((tag): tag is Tag => typeof tag === "object" && tag !== null)
+      .map((tag) => tag.name),
+  }));
+
   return (
     <div className="site-page">
       <SiteHeader />
-      <main className="site-main">
+      <main className="site-main" data-page>
         <h1 className="page-title">Blog</h1>
         <p className="page-lede">
           Published notes from the CMS.
         </p>
-        <form action="/blog" className="mt-8 flex max-w-2xl gap-3" method="GET">
-          <input
-            className="form-field min-w-0 flex-1"
-            defaultValue={query}
-            name="q"
-            placeholder="Search posts"
-            type="search"
-          />
-          <button
-            className="action-link action-primary"
-            type="submit"
-          >
-            Search
-          </button>
-        </form>
+        <BlogSearch initialQuery={query} posts={searchPosts} />
         {query ? (
           <div className="search-summary">
             <p>

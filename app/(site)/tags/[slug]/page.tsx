@@ -65,7 +65,7 @@ export default async function TagPage({ params, searchParams }: Args) {
   return (
     <div className="site-page">
       <SiteHeader />
-      <main className="site-main">
+      <main className="site-main" data-page>
         <p className="page-eyebrow">Tag</p>
         <h1 className="page-title mt-3">
           {tag.name}
