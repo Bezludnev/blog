@@ -73,7 +73,7 @@ export default async function BlogPostPage({ params }: Args) {
     <div className="site-page">
       <SiteHeader />
       <PostViewTracker postSlug={post.slug} />
-      <main className="site-main-narrow">
+      <main className="site-main-narrow" data-page>
         <article className="article-panel">
           <p className="meta-copy">
             {readingTime ? `${date} / ${readingTime}` : date}

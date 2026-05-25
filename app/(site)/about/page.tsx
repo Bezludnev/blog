@@ -35,7 +35,7 @@ export default async function AboutPage() {
   return (
     <div className="site-page">
       <SiteHeader />
-      <main className="site-main">
+      <main className="site-main" data-page>
         <h1 className="page-title">About</h1>
         <p className="body-copy mt-4 max-w-3xl text-xl leading-8">
           {headline}

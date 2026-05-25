@@ -222,6 +222,24 @@ export async function getPublishedPostsByTagIdPage({
   };
 }
 
+export async function getRecentPublishedPostsForSearch(limit = 50) {
+  const payload = await getPayloadClient();
+
+  const result = await payload.find({
+    collection: "posts",
+    depth: 1,
+    limit,
+    sort: "-publishedAt",
+    where: {
+      status: {
+        equals: "published",
+      },
+    },
+  });
+
+  return result.docs as Post[];
+}
+
 export async function getRecentPublishedPostsForFeed(limit = 20) {
   const payload = await getPayloadClient();
 

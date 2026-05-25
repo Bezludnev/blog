@@ -28,7 +28,7 @@ export default async function ContactPage() {
   return (
     <div className="site-page">
       <SiteHeader />
-      <main className="site-main">
+      <main className="site-main" data-page>
         <h1 className="page-title">Contact</h1>
         <p className="page-lede">
           The simplest way to get in touch for project, writing, or engineering

@@ -65,7 +65,7 @@ export default async function Home() {
   return (
     <div className="site-page">
       <SiteHeader />
-      <main className="site-main-home">
+      <main className="site-main-home" data-page>
         <p className="page-eyebrow">{siteName}</p>
         <h1 className="page-title mt-4 max-w-3xl sm:text-5xl">
           {headline}

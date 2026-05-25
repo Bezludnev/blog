@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
+import { BlogSearch } from "@/components/blog-search";
 import { Pagination } from "@/components/pagination";
 import { PostCard } from "@/components/post-card";
 import { SiteHeader } from "@/components/site-header";
@@ -48,26 +49,12 @@ export default async function BlogPage({ searchParams }: Args) {
   return (
     <div className="site-page">
       <SiteHeader />
-      <main className="site-main">
+      <main className="site-main" data-page>
         <h1 className="page-title">Blog</h1>
         <p className="page-lede">
           Published notes from the CMS.
         </p>
-        <form action="/blog" className="mt-8 flex max-w-2xl gap-3" method="GET">
-          <input
-            className="form-field min-w-0 flex-1"
-            defaultValue={query}
-            name="q"
-            placeholder="Search posts"
-            type="search"
-          />
-          <button
-            className="action-link action-primary"
-            type="submit"
-          >
-            Search
-          </button>
-        </form>
+        <BlogSearch initialQuery={query} />
         {query ? (
           <div className="search-summary">
             <p>

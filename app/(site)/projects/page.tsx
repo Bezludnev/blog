@@ -26,7 +26,7 @@ export default async function ProjectsPage() {
   return (
     <div className="site-page">
       <SiteHeader />
-      <main className="site-main">
+      <main className="site-main" data-page>
         <h1 className="page-title">Projects</h1>
         <p className="page-lede">
           Selected work, experiments, and engineering case studies.

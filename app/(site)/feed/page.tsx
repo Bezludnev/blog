@@ -41,7 +41,7 @@ export default async function FeedPage({ searchParams }: Args) {
   return (
     <div className="site-page">
       <SiteHeader />
-      <main className="site-main">
+      <main className="site-main" data-page>
         <h1 className="page-title">Feed</h1>
         <p className="page-lede">
           Articles, videos, tools, and repositories worth saving.

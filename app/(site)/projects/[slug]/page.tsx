@@ -51,7 +51,7 @@ export default async function ProjectPage({ params }: Args) {
   return (
     <div className="site-page">
       <SiteHeader />
-      <main className="site-main-narrow">
+      <main className="site-main-narrow" data-page>
         <article className="article-panel">
           <p className="page-eyebrow">Project</p>
           <h1 className="page-title mt-3">
