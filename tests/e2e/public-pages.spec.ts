@@ -64,6 +64,46 @@ test("public CMS pages render and navigate from the shared header", async ({
   ).toBeVisible();
 });
 
+test("public shell applies footer and page enter styles", async ({ page }) => {
+  await page.goto("/");
+
+  await page
+    .getByRole("navigation")
+    .getByRole("link", { name: "Blog", exact: true })
+    .click();
+  await page.waitForURL(/\/blog$/);
+  await page.waitForFunction(() =>
+    document
+      .getAnimations()
+      .some(
+        (animation) =>
+          animation instanceof CSSAnimation &&
+          animation.animationName === "pageEnter",
+      ),
+  );
+
+  const shellStyles = await page.evaluate(() => {
+    const footer = document.querySelector(".site-footer");
+    const footerInner = document.querySelector(".site-footer-inner");
+    const firstPageChild = document.querySelector("[data-page] > *");
+    const footerStyle = footer ? getComputedStyle(footer) : null;
+    const footerInnerStyle = footerInner ? getComputedStyle(footerInner) : null;
+    const firstPageChildStyle = firstPageChild
+      ? getComputedStyle(firstPageChild)
+      : null;
+
+    return {
+      footerBackground: footerStyle?.backgroundColor ?? null,
+      footerInnerDisplay: footerInnerStyle?.display ?? null,
+      pageAnimationName: firstPageChildStyle?.animationName ?? null,
+    };
+  });
+
+  expect(shellStyles.footerBackground).not.toBe("rgba(0, 0, 0, 0)");
+  expect(shellStyles.footerInnerDisplay).toBe("grid");
+  expect(shellStyles.pageAnimationName).toBe("pageEnter");
+});
+
 test("blog search shows an empty state for a unique query", async ({ page }) => {
   const query = "playwright-no-results-2026-05-24";
 
