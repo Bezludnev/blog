@@ -31,11 +31,53 @@ test("public CMS pages render and navigate from the shared header", async ({
 }) => {
   await page.goto("/");
   const navigation = page.getByRole("navigation");
+  const slideTabs = navigation.locator("[data-site-nav-tabs]");
+  const slideCursor = navigation.locator("[data-site-nav-cursor]");
 
   await expect(navigation).toBeVisible();
+  await expect(slideTabs).toBeVisible();
+  await expect(slideTabs).toHaveCSS("background-color", "rgb(255, 255, 255)");
+  await expect(slideTabs).toHaveCSS("display", "flex");
+  await expect(slideCursor).toHaveCSS("opacity", "0");
   await expect(page.getByRole("link", { name: "Read the blog" })).toBeVisible();
+  await expect
+    .poll(async () =>
+      navigation.evaluate((element) => {
+        const navigationBox = element.getBoundingClientRect();
+        const tabsBox = element
+          .querySelector("[data-site-nav-tabs]")
+          ?.getBoundingClientRect();
 
-  await navigation.getByRole("link", { name: "Blog", exact: true }).click();
+        if (!tabsBox) {
+          return Number.POSITIVE_INFINITY;
+        }
+
+        return Math.abs(
+          tabsBox.left +
+            tabsBox.width / 2 -
+            (navigationBox.left + navigationBox.width / 2),
+        );
+      }),
+    )
+    .toBeLessThan(8);
+
+  const blogLink = navigation.getByRole("link", { name: "Blog", exact: true });
+  await expect(blogLink).toHaveCSS("color", "rgb(0, 0, 0)");
+  await blogLink.hover();
+  await expect(slideCursor).toHaveCSS("opacity", "1");
+  await expect(blogLink).toHaveCSS("color", "rgb(255, 255, 255)");
+  await expect
+    .poll(async () =>
+      slideCursor.evaluate((element) =>
+        Math.round(element.getBoundingClientRect().width),
+      ),
+    )
+    .toBeGreaterThan(0);
+
+  await page.getByRole("link", { name: "Read the blog" }).hover();
+  await expect(slideCursor).toHaveCSS("opacity", "0");
+
+  await blogLink.click();
   await expect(page).toHaveURL(/\/blog$/);
   await expect(page.getByRole("heading", { name: "Blog" })).toBeVisible();
   await expect(page.getByPlaceholder("Search posts")).toBeVisible();

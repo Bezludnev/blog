@@ -163,18 +163,18 @@ body {
   }
 
   .site-nav {
-    @apply mx-auto flex max-w-5xl items-center justify-between gap-4 px-6 py-4;
+    @apply mx-auto flex max-w-5xl flex-wrap items-center justify-center gap-4 px-6 py-4;
   }
 
   @media (max-width: 640px) {
     .site-nav {
       align-items: flex-start;
-      flex-direction: column;
     }
   }
 
   .site-brand {
     color: var(--site-foreground);
+    flex: 1 1 8rem;
     font-weight: 850;
     text-decoration: none;
     transition: color 150ms ease, transform 150ms ease;
@@ -185,8 +185,14 @@ body {
     transform: translateY(-1px);
   }
 
+  .site-nav-actions {
+    display: flex;
+    flex: 0 0 auto;
+    justify-content: flex-end;
+  }
+
   .site-nav-links {
-    @apply flex flex-wrap items-center justify-end gap-x-2 gap-y-2 text-sm;
+    @apply flex flex-wrap items-center justify-end gap-x-3 gap-y-2 text-sm;
     color: var(--site-muted);
   }
 
@@ -196,22 +202,79 @@ body {
     }
   }
 
-  .site-nav-link {
-    border: 1px solid transparent;
+  .site-nav-tabs {
+    background: var(--surface);
+    border: 2px solid var(--site-foreground);
     border-radius: 999px;
-    padding: 0.45rem 0.7rem;
+    display: flex;
+    flex: 0 1 auto;
+    isolation: isolate;
+    list-style: none;
+    margin: 0;
+    max-width: 100%;
+    overflow-x: auto;
+    padding: 0.25rem;
+    position: relative;
+    scrollbar-width: none;
+    width: fit-content;
+  }
+
+  .site-nav-tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .site-nav-tab-item {
+    flex: 0 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  .site-nav-tab-link {
+    border-radius: 999px;
+    color: var(--site-foreground);
+    cursor: pointer;
+    display: block;
+    font-size: clamp(0.62rem, 2vw, 0.8rem);
+    font-weight: 850;
+    letter-spacing: 0;
+    line-height: 1;
+    mix-blend-mode: normal;
+    padding: 0.4rem clamp(0.45rem, 1.6vw, 0.85rem);
+    text-decoration: none;
+    text-transform: uppercase;
     transition:
-      background-color 150ms ease,
-      border-color 150ms ease,
-      color 150ms ease,
+      color 120ms ease,
       transform 150ms ease;
   }
 
-  .site-nav-link:hover {
-    background: var(--surface);
-    border-color: var(--line);
-    color: var(--site-foreground);
+  .site-nav-tab-link:hover {
     transform: translateY(-1px);
+  }
+
+  .site-nav-tab-link:focus-visible {
+    outline: 2px solid var(--site-accent);
+    outline-offset: 2px;
+  }
+
+  .site-nav-cursor {
+    background: var(--site-accent);
+    border-radius: 999px;
+    height: calc(100% - 0.5rem);
+    left: 0;
+    pointer-events: none;
+    position: absolute;
+    top: 0.25rem;
+    transition:
+      opacity 120ms ease,
+      transform 180ms ease,
+      width 180ms ease;
+    z-index: 0;
+  }
+
+  @media (min-width: 768px) {
+    .site-nav-tab-link {
+      font-size: 0.8rem;
+    }
   }
 
   .theme-toggle {
