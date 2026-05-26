@@ -26,7 +26,7 @@ type SlideTabProps = {
 
 const tabsStyle: CSSProperties = {
   background: "var(--surface)",
-  border: "2px solid var(--site-foreground)",
+  border: "2px solid var(--line)",
   borderRadius: "999px",
   display: "flex",
   flex: "0 1 auto",
