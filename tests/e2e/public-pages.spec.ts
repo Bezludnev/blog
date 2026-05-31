@@ -31,11 +31,53 @@ test("public CMS pages render and navigate from the shared header", async ({
 }) => {
   await page.goto("/");
   const navigation = page.getByRole("navigation");
+  const slideTabs = navigation.locator("[data-site-nav-tabs]");
+  const slideCursor = navigation.locator("[data-site-nav-cursor]");
 
   await expect(navigation).toBeVisible();
+  await expect(slideTabs).toBeVisible();
+  await expect(slideTabs).toHaveCSS("background-color", "rgb(255, 255, 255)");
+  await expect(slideTabs).toHaveCSS("display", "flex");
+  await expect(slideCursor).toHaveCSS("opacity", "0");
   await expect(page.getByRole("link", { name: "Read the blog" })).toBeVisible();
+  await expect
+    .poll(async () =>
+      navigation.evaluate((element) => {
+        const navigationBox = element.getBoundingClientRect();
+        const tabsBox = element
+          .querySelector("[data-site-nav-tabs]")
+          ?.getBoundingClientRect();
 
-  await navigation.getByRole("link", { name: "Blog", exact: true }).click();
+        if (!tabsBox) {
+          return Number.POSITIVE_INFINITY;
+        }
+
+        return Math.abs(
+          tabsBox.left +
+            tabsBox.width / 2 -
+            (navigationBox.left + navigationBox.width / 2),
+        );
+      }),
+    )
+    .toBeLessThan(8);
+
+  const blogLink = navigation.getByRole("link", { name: "Blog", exact: true });
+  await expect(blogLink).toHaveCSS("color", "rgb(0, 0, 0)");
+  await blogLink.hover();
+  await expect(slideCursor).toHaveCSS("opacity", "1");
+  await expect(blogLink).toHaveCSS("color", "rgb(255, 255, 255)");
+  await expect
+    .poll(async () =>
+      slideCursor.evaluate((element) =>
+        Math.round(element.getBoundingClientRect().width),
+      ),
+    )
+    .toBeGreaterThan(0);
+
+  await page.getByRole("link", { name: "Read the blog" }).hover();
+  await expect(slideCursor).toHaveCSS("opacity", "0");
+
+  await blogLink.click();
   await expect(page).toHaveURL(/\/blog$/);
   await expect(page.getByRole("heading", { name: "Blog" })).toBeVisible();
   await expect(page.getByPlaceholder("Search posts")).toBeVisible();
@@ -114,4 +156,23 @@ test("blog search shows an empty state for a unique query", async ({ page }) => 
   await expect(page).toHaveURL(new RegExp(`/blog\\?q=${query}$`));
   await expect(page.getByText(`Search results for ${query}`)).toBeVisible();
   await expect(page.getByText("No posts match this search.")).toBeVisible();
+});
+
+test("blog detail page uses a structured article layout", async ({ page }) => {
+  await page.goto("/blog");
+
+  const firstPostLink = page.locator(".card-item .title-link").first();
+  await expect(firstPostLink).toBeVisible();
+
+  await firstPostLink.click();
+  await expect(page).toHaveURL(/\/blog\/[^/?#]+$/);
+  await expect(page.locator(".blog-detail-shell")).toBeVisible();
+  await expect(
+    page.getByRole("complementary", { name: "Article details" }),
+  ).toBeVisible();
+  await expect(page.locator(".blog-detail-content")).toBeVisible();
+  await expect(page.getByRole("link", { name: "Back to blog" })).toHaveAttribute(
+    "href",
+    "/blog",
+  );
 });

@@ -73,17 +73,19 @@ export default async function BlogPostPage({ params }: Args) {
     <div className="site-page">
       <SiteHeader />
       <PostViewTracker postSlug={post.slug} />
-      <main className="site-main-narrow" data-page>
-        <article className="article-panel">
-          <p className="meta-copy">
-            {readingTime ? `${date} / ${readingTime}` : date}
-          </p>
-          <h1 className="page-title mt-3">
-            {post.title}
-          </h1>
-          <p className="page-lede-lg">
-            {post.excerpt}
-          </p>
+      <main className="site-main-detail" data-page>
+        <article className="blog-detail-shell">
+          <header className="blog-detail-hero">
+            <p className="meta-copy">
+              {readingTime ? `${date} / ${readingTime}` : date}
+            </p>
+            <h1 className="page-title mt-3">
+              {post.title}
+            </h1>
+            <p className="page-lede-lg">
+              {post.excerpt}
+            </p>
+          </header>
           {tags.length > 0 ? (
             <div className="tag-row mt-5">
               {tags.map((tag) => (
@@ -98,13 +100,44 @@ export default async function BlogPostPage({ params }: Args) {
             </div>
           ) : null}
           <MediaImage
-            className="media-frame mt-8"
+            className="blog-detail-cover media-frame"
             media={post.coverImage}
             priority
-            sizes="(min-width: 768px) 768px, 100vw"
+            sizes="(min-width: 1024px) 1024px, 100vw"
           />
-          <RichText content={post.content} />
-          <CommentsSection postId={post.id} postSlug={post.slug} />
+          <div className="blog-detail-grid">
+            <div className="blog-detail-content">
+              <RichText content={post.content} />
+              <CommentsSection postId={post.id} postSlug={post.slug} />
+            </div>
+            <aside
+              aria-label="Article details"
+              className="blog-detail-sidebar"
+            >
+              <h2 className="blog-detail-sidebar-title">Article details</h2>
+              <dl className="blog-detail-facts">
+                <div>
+                  <dt>Published</dt>
+                  <dd>{date}</dd>
+                </div>
+                <div>
+                  <dt>Reading time</dt>
+                  <dd>{readingTime || "Not estimated"}</dd>
+                </div>
+                <div>
+                  <dt>Topics</dt>
+                  <dd>
+                    {tags.length > 0
+                      ? tags.map((tag) => tag.name).join(", ")
+                      : "No topics"}
+                  </dd>
+                </div>
+              </dl>
+              <Link className="action-link action-secondary mt-6" href="/blog">
+                Back to blog
+              </Link>
+            </aside>
+          </div>
         </article>
       </main>
     </div>
