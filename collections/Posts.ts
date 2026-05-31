@@ -1,9 +1,15 @@
 import type { CollectionConfig } from "payload";
+import {
+  BlocksFeature,
+  CodeBlock,
+  lexicalEditor,
+} from "@payloadcms/richtext-lexical";
 
 import {
   revalidatePostAfterChange,
   revalidatePostAfterDelete,
 } from "../lib/payload-revalidation.ts";
+import { CODE_BLOCK_LANGUAGES } from "../lib/rich-text-code-block.ts";
 import { isAdmin, publishedOrAdmin } from "./access.ts";
 
 export const Posts: CollectionConfig = {
@@ -42,6 +48,19 @@ export const Posts: CollectionConfig = {
     {
       name: "content",
       type: "richText",
+      editor: lexicalEditor({
+        features: ({ defaultFeatures }) => [
+          ...defaultFeatures,
+          BlocksFeature({
+            blocks: [
+              CodeBlock({
+                defaultLanguage: "plaintext",
+                languages: CODE_BLOCK_LANGUAGES,
+              }),
+            ],
+          }),
+        ],
+      }),
       required: true,
     },
     {

@@ -157,3 +157,22 @@ test("blog search shows an empty state for a unique query", async ({ page }) => 
   await expect(page.getByText(`Search results for ${query}`)).toBeVisible();
   await expect(page.getByText("No posts match this search.")).toBeVisible();
 });
+
+test("blog detail page uses a structured article layout", async ({ page }) => {
+  await page.goto("/blog");
+
+  const firstPostLink = page.locator(".card-item .title-link").first();
+  await expect(firstPostLink).toBeVisible();
+
+  await firstPostLink.click();
+  await expect(page).toHaveURL(/\/blog\/[^/?#]+$/);
+  await expect(page.locator(".blog-detail-shell")).toBeVisible();
+  await expect(
+    page.getByRole("complementary", { name: "Article details" }),
+  ).toBeVisible();
+  await expect(page.locator(".blog-detail-content")).toBeVisible();
+  await expect(page.getByRole("link", { name: "Back to blog" })).toHaveAttribute(
+    "href",
+    "/blog",
+  );
+});

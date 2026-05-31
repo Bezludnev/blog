@@ -63,3 +63,7 @@ Strong success criteria let you loop independently. Weak criteria ("make it work
 ---
 
 **These guidelines are working if:** fewer unnecessary changes in diffs, fewer rewrites due to overcomplication, and clarifying questions come before implementation rather than after mistakes.
+
+# frontend/claude.md
+- This is a Next.js frontend app. Always follow the existing component structure and design system.
+- Use shared UI components first, prefer server components where possible, and avoid adding new dependencies unless necessary.

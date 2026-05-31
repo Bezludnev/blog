@@ -1,4 +1,8 @@
 import type { ReactNode } from "react";
+import type { BundledLanguage } from "shiki";
+
+import { CodeBlock, CodeBlockTitle } from "@/components/chatcn/ai/codeblock";
+import { getCodeBlockFields } from "@/lib/rich-text-code-block";
 
 type LexicalTextNode = {
   text?: string;
@@ -64,6 +68,27 @@ function renderChildren(nodes: LexicalNode[] | undefined, key: string) {
 function renderNode(node: LexicalNode, key: string): ReactNode {
   if (node.type === "text") {
     return renderText(node as LexicalTextNode, key);
+  }
+
+  const codeBlock = getCodeBlockFields(node);
+
+  if (codeBlock) {
+    const language = (codeBlock.language || "plaintext") as BundledLanguage;
+
+    return (
+      <CodeBlock
+        className="rich-code-panel"
+        code={codeBlock.code}
+        height="480"
+        key={key}
+        lang={language}
+        theme="github-dark-default"
+      >
+        <CodeBlockTitle lang={codeBlock.language}>
+          {codeBlock.languageLabel || "Code"}
+        </CodeBlockTitle>
+      </CodeBlock>
+    );
   }
 
   const children = renderChildren(node.children, key);

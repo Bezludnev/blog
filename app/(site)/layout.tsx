@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Script from "next/script";
 import { SiteFooter } from "@/components/site-footer";
+import { TooltipProvider } from "@/components/ui/tooltip";
 import { VercelInsights } from "@/components/vercel-insights";
 import { canonicalUrl, getSiteUrl } from "@/lib/seo";
 import { getThemeBootstrapScript } from "@/lib/theme";
@@ -32,7 +33,7 @@ export default function SiteLayout({
           id="theme-bootstrap"
           strategy="beforeInteractive"
         />
-        {children}
+        <TooltipProvider>{children}</TooltipProvider>
         <SiteFooter />
         <VercelInsights />
       </body>
